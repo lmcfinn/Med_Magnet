@@ -1,3 +1,26 @@
+
+# Project Overview
+
+### Patient
+* **Drug record**
+  - autocomplete drug options
+  - use api to pull side effects
+  - use api for drug conflicts
+
+* **Symptom Input**
+  - What it is
+  - When
+  - severity
+  - visually display (github contrib graph)
+
+### Doctor
+* List Of Patience
+  - Full records when clicked on
+  - Symptom timeline each patient
+  - per-patient notepad
+
+
+# Class Requirements
 ### Must use at least two APIs
 * Open FDA (side-effects):  https://open.fda.gov/api/
 * National Library of Medicine (conflicting drugs): https://rxnav.nlm.nih.gov/InteractionAPIREST.html
