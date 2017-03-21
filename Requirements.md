@@ -12,6 +12,9 @@
   - When
   - severity
   - visually display (github contrib graph)
+  
+* **Pharmacy Search**
+  - uses location to map out pharmacies nearby
 
 ### Doctor
 * List Of Patience
@@ -24,6 +27,7 @@
 ### Must use at least two APIs
 * Open FDA (side-effects):  https://open.fda.gov/api/
 * National Library of Medicine (conflicting drugs): https://rxnav.nlm.nih.gov/InteractionAPIREST.html
+* Google Maps for pharmacies
 
 ### Must use AJAX to pull data
 * See APIs above
