@@ -36,6 +36,7 @@
 * charts.js (display charts/graphs - Still need application)
 
 ### Must have a polished frontend / UI 
+* Harvest Combobox: https://harvesthq.github.io/chosen/
 
 ### Must meet good quality coding standards (indentation, scoping, naming)
 
