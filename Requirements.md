@@ -39,7 +39,7 @@
 * OAuth (Maybe)
 * animate.css (Maybe)
 * bootstrap validator: http://1000hz.github.io/bootstrap-validator/
-* charts.js (display charts/graphs - Still need application)
+
 
 ### Must have a polished frontend / UI 
 * Harvest Combobox: https://harvesthq.github.io/chosen/
