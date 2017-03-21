@@ -15,6 +15,8 @@
   
 * **Pharmacy Search**
   - uses location to map out pharmacies nearby
+  
+* Preferred Pharamacy
 
 ### Doctor
 
@@ -24,6 +26,7 @@
   - Symptom timeline each patient
   - per-patient notepad
 
+* Script notifier
 
 # Class Requirements
 ### Must use at least two APIs
