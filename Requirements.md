@@ -1,6 +1,6 @@
 ### Must use at least two APIs
-* https://open.fda.gov/api/
-* https://rxnav.nlm.nih.gov/InteractionAPIREST.html
+* Open FDA (side-effects):  https://open.fda.gov/api/
+* National Library of Medicine (conflicting drugs): https://rxnav.nlm.nih.gov/InteractionAPIREST.html
 
 ### Must use AJAX to pull data
 * See APIs above
