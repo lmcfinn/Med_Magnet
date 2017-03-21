@@ -1,4 +1,4 @@
-### Must uses at least two APIs
+### Must use at least two APIs
 * https://open.fda.gov/api/
 * https://rxnav.nlm.nih.gov/InteractionAPIREST.html
 
