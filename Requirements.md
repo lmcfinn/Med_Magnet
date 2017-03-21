@@ -4,6 +4,7 @@
 
 ### Must use AJAX to pull data
 * See APIs above
+* Firebase API get & set
 
 ### Must utilize at least one new library or technology that we haven’t discussed
 * OAuth (Maybe)
