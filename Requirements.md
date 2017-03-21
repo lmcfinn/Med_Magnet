@@ -39,6 +39,7 @@
 * OAuth (Maybe)
 * animate.css (Maybe)
 * bootstrap validator: http://1000hz.github.io/bootstrap-validator/
+* Harvest Combobox (input)
 
 
 ### Must have a polished frontend / UI 
