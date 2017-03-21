@@ -17,6 +17,7 @@
   - uses location to map out pharmacies nearby
 
 ### Doctor
+
 * **List Of Patience**
   - Full records when clicked on
   - Symptom timeline each patient
