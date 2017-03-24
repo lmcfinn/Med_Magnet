@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chosen Test 5</title>
+			<!-- Bootstrap -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		          	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		    <!-- jQuery -->
+		    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+		    <!-- Chosen plugin css -->
+		    <link rel="stylesheet" type="text/css" href="assets/CSS/chosen.min.css">
+		    <!-- Chosen plugin js -->
+		    <script type="text/javascript" src="assets/JS/chosen.jquery.min.js"></script>
+		    <!-- Firebase js -->
+		    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+		    <!-- Moment.js -->
+            <!-- <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> -->
+
+		    <script type="text/javascript">
+		    	$(document).ready(function(){
+
+		    		// Create an array of all the drugs
+		    		var drugArray = [" ","Synthroid","Videx","Vicodin","Amoxil","Prinivil","Nexium","Lipitor","Zocor","Plavix","Singulair","Lopressor","Zithromax","Glucophage","Zoloft","Advil","Ambien","Lasix","Prilosec","Desyrel","Diovan","Ultram","Cymbalta","Coumadin","Norvasc","Percocet","Seroquel","Phenergan","Flonase","Xanax","Klonopin","Lotensin","Mobic","Celexa","Keflex","Spiriva","Neurontin","Abilify","K-Tab","Medrol","Concerta","Claritin","Coreg","Soma","Lanoxin","Namenda","Tenormin","Valium","Prozac","Adderall","Viagra"]
+
+	    			// Create option list of all the drugs
+	    			for (var i = 0; i < drugArray.length; i++) {
+		    				
+    					$(".drugselect").append("<option>" + drugArray[i] + "</option>");
+
+		    		}
+
+		    		// Execute the Chosen plugin
+		    		$(".drugselect").chosen({
+		    			// Set the drop down bar width
+		    			width: "80%"
+		    		});
+
+		    		var drugSelected;
+
+		    		// Connect with and initiate Firebase
+		    		var config = {
+			    		 apiKey: "AIzaSyBiY4bFR2V-P7j3AAiknm5p8-Bq_O1yB_Q",
+						 authDomain: "med-magnet-test.firebaseapp.com",
+						 databaseURL: "https://med-magnet-test.firebaseio.com",
+						 storageBucket: "med-magnet-test.appspot.com",
+						 messagingSenderId: "527778945969"
+			    	};
+			    	firebase.initializeApp(config);
+			    	var database = firebase.database();
+			    	
+ 					
+ 					// Add the drugs to drugList
+			    	$(".addbutton").on("click", function() {
+				   
+				      	event.preventDefault();
+
+				      	// Assign value to the var drugSelected
+				      	drugSelected = $(".drugselect").val();
+
+			    	 	// Push the value to Firebase
+			    	 	database.ref().push({
+
+					    	drugSelected
+					  	 
+					  	});
+
+				    });
+
+			    	// Retrieve data from Firebase to display in the table
+				    database.ref().on("child_added", function(childSnapshot) {
+
+				    	var userDrug = childSnapshot.val().drugSelected;
+
+				    	// Append data to the DOM (data from firebase)
+				    	$(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + userDrug + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs'>Delete</button></td>" + "</tr>");
+
+				    });
+
+
+			    	// OnCick function to make ajax call to display side effects of each drug from the API database
+				    $(document).on("click", ".drugadded", function(){
+
+				  //   	Setting up the ajax URL
+						var drugPicked = $(this).text().toUpperCase();
+
+						var queryURL = "https://api.fda.gov/drug/event.json?search=patient.drug.openfda.brand_name.exact:(%22" + drugPicked + "%22)&count=patient.reaction.reactionmeddrapt.exact"
+				    	$.ajax({
+				          url: queryURL,
+				          method: "GET"
+				        })
+				        .done(function(response) {
+
+				        	console.log(response);
+
+
+				        	// Call the first 10 side effects
+				        	for( var i = 0; i < 10; i++ ) {
+
+				        		$("#effectdisplay").append('"' + response.results[i].term + '"; ');
+
+				        	}
+				        });
+
+				        // Clear out previous side effects
+				        $("#effectdisplay").empty();
+				    });
+
+				    // Listen for clicks to delete a drug selected
+				    $(document).on("click", ".deletebtn", function(){
+
+				    	// Delete "tr" from the DOM, but not on Firebase
+				    	$(this).parents("tr").remove();
+
+				    	// How to delete data from Firebase??
+				    	database.ref().on("child_removed", function(childSnapshot) {
+
+				    		database.ref().child().remove()
+
+				    	});
+				    });
+		    	});
+		    </script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">Add your prescriptions
+					</div>
+					
+					<div class="panel-body">
+						<select class="drugselect" data-placeholder="Add your prescriptions">
+						
+						</select>
+						<button class="addbutton">Add</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">Your Prescription List
+						</div>
+						<div class="panel-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Drug Name</th>
+									</tr>
+								</thead>
+								<tbody id="drugname">
+										
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">Side Effects
+						</div>
+						<div class="panel-body">
+							<div id="effectdisplay">
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</body>
+</html>
