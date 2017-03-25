@@ -3,7 +3,7 @@ var userSavedSymptomList = [];
 $("#add-symptom-button").on("click", function runSymptom (event) {
 	event.preventDefault();
 
-    var reportedSymptom = $("#new-symptom").val().trim();
+    var reportedSymptom = $("#new-symptom-input").val().trim();
 
     userSavedSymptomList.push(reportedSymptom);
 
@@ -23,7 +23,7 @@ $("#add-symptom-button").on("click", function runSymptom (event) {
 	symptomList = symptomList.prepend(symptomRemoveBtn);
 
 	$("#reported-symptoms").append(symptomList);
-	$("#new-symptom").val("");
+	$("#new-symptom-input").val("");
 
 });
 
@@ -33,21 +33,3 @@ $(document.body).on("click", ".checkbox", function() {
 	$("#item-" + historicalSymptom).remove();
 });
 
-
-// function newButton(event) {
-// 	symptomVal = $('#new-symptom').val().trim();
-
-
-// 		newSymptom = $('<li class="list-group-item"' + symptomVal + '"><span>' + symptomVal + '</span></li>');
-// 		$('#symptoms-list-group').append(newSymptom);
-// 	$('#new-symptom').val('');
-// };
-
-// $(document).ready(function() {
-// 		$('#add-button').click(newButton);
-// 	$(document).keypress(function(e) {
-// 		if(e.which === 13) {
-// 			newButton();
-// 		}
-// 	});
-// });
