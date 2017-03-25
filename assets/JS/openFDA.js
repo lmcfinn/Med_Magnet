@@ -112,21 +112,4 @@ $(document).ready(function(){
 		});
 
 	}
-
-	//===TEST AREA - DO NOT COPY INTO MAIN===
-	var test = '';
-	getSideEffects('Advil', function(response){
-		test = response;
-		console.log(1, test);	
-	})
-
-	getWarning('viagra', function(response){
-		test = response;
-		console.log(2, test);	
-	})
-
-	getConflictingDrugs('xaNAX', function(response){
-		test = response;
-		console.log(3, test);	
-	})
 });
