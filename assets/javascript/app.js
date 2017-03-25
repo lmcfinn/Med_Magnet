@@ -1,42 +1,74 @@
-// hint for the HW: q, limit, rating
-
-var topics = ['koala', 'kangaroo', 'platypuses'];
-
-var api = "http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=dc6zaTOxFJmzC";
-var apiKey = "&api_key=dc6zaTOxFJmzC";
-var query = "&q=" 
+var userEtag = '';
 
 
-// /v1/gifs / search
-// api.giphy.com
+  var config = {
+    apiKey: "AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8",
+    authDomain: "my-awesome-project-2b194.firebaseapp.com",
+    databaseURL: "https://my-awesome-project-2b194.firebaseio.com",
+    storageBucket: "my-awesome-project-2b194.appspot.com",
+    messagingSenderId: "901877515687"
+  };
+  firebase.initializeApp(config);
 
-var searchBar = document.getElementById("searchBar");
-console.log(searchBar);
 
-var magnifyingGlass = document.getElementsByClassName("input-group-addon");
 
-function printText(){
-  console.log(this)
-  console.log(this.text)
+  var database = firebase.database();
+  var databaseRef = database.ref();
+
+
+  var delete_cookie = function(name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+  var signout = function() {
+    hello('google').logout()
+    localStorage.removeItem('hello');
+    location.reload();
+  	delete_cookie('NID');
+
+  };
+
+
+
+  hello.init({
+    google: "901877515687-0d07o7leoihhv3ina4bqcv40ab347q86.apps.googleusercontent.com"
+  }, {
+    redirect_uri: 'https://dangnabit.github.io/OAuth/OAuth%20Test.html'
+  });
+
+  hello.on('auth.login', function(auth) {
+
+    // Call user information, for the given network
+    hello(auth.network).api('me').then(function(r) {
+      console.log(r);
+      // Inject it into the container
+      var label = document.getElementById('profile_' + auth.network);
+      if (!label) {
+        label = document.createElement('div');
+        label.id = 'profile_' + auth.network;
+        document.getElementById('profile').appendChild(label);
+      }
+      
+      userEtag = r.etag;
+
+      label.innerHTML = '<img src="' + r.thumbnail + '" /> Hey ' + r.name + "<br>" + r.etag;
+      var googSession = hello('google').getAuthResponse()
+
+      var googAccessToken = googSession.access_token
+
+      var googExpires = googSession.expires
+
+      console.log(googAccessToken);
+      console.log(googExpires);
+     	
+      writeUserData(r.etag, r.name, r.email, r.thumbnail);
+    });
+  });
+
+
+function writeUserData(userId, name, email, imageUrl) {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    profile_picture : imageUrl
+  });
 }
-
-// class='xOut'
-// id='searchBar'
-
-
-// function printGiphy() {
-//     print();
-//     var url = api + apiKey + query
-// };
-
-// loadJASON(url, gotData);
-
-// function gotData(data) {
-//     data.data.[0].images.orgininals.url
-// };
-
-// When user clicks the search button a button with the word searched for will appear 
-// underneath the search bar as a deletable button.  The search should automatically 
-// print 6 images each time an item is searched. 
-
-// When you x out a word searched, it will delete all the giphies associated with it.
