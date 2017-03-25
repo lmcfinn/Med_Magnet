@@ -7,20 +7,13 @@
 h1 {
     font-size: 36px;
     color: #d9534f;
+    margin: 2%;
 }
 
 .h1,
 .h2,
 .h3,
-.h4,
-.h5,
-.h6,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.h4 {
     font-weight: 500;
     line-height: 1.1;
 }
@@ -72,7 +65,22 @@ a:-webkit-any-link {
 }
 
 
+/*--Body--*/
+
+a.absolute {
+    position: absolute;
+    display: block;
+    margin-top left: 0;
+    top: 0;
+}
+
+
 /*--Red Pill--*/
+
+ul.first-r {
+    left: 0%;
+    position: relative;
+}
 
 ul {
     list-style-type: none;

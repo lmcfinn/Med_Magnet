@@ -1,81 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Med Magnet</title>
+	<head>
+		<title>Med Magnet</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+			 integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	    <!-- jQuery -->
+	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	    <!-- Chosen plugin css -->
+	    <link rel="stylesheet" type="text/css" href="assets/css/chosen.min.css">
+		
+		<!-- Aniko's css -->
+	    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	    
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-		          	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-    <!-- Chosen plugin css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/chosen.min.css">
+	    <!-- Chosen plugin js -->
+	    <script type="text/javascript" src="assets/javascript/chosen.jquery.min.js"></script>
+	    <!-- Firebase js -->
+	    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+		<!-- Shane's JS -->
+	    <script type="text/javascript" src="assets/javascript/se.js"></script>
+		<!-- alek's js -->
+	    <script type="text/javascript" src="assets/javascript/openFDA.js"></script>
+		<!-- dan's js -->
+	    <script type="text/javascript" src="assets/javascript/hello.js"></script>
+		<!-- dan's js -->
+	    <script type="text/javascript" src="assets/javascript/app.js"></script>
+	    <!-- johnny's js -->
+	    <script type="text/javascript" src="assets/javascript/magnetapp.js"></script>
+
+	</head>
+	<body>
 	
-	<!-- Aniko's css -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+		<div class="containerIntro" id="+MedMagnet">
+	        <div class="row">
+	            <h1>+MedMagnet</h1>
+	        </div>
+	    </div>
+	    <div class="row">
+	        <div class="container col-lg-6">
+	            <nav class="navbar navbar-inverse cover">
+	                <a href="#" class="navbar-brand">Link1</a>
+	                <a href="#" class="navbar-brand">Link2</a>
+	                <a href="#" class="navbar-brand">Link3</a>
+	                <a href="#" class="navbar-brand">Link4</a>
+	                <a href="#" class="navbar-brand">Link5</a>
+	                <a href="#" class="navbar-brand">Link6</a>
+	                <a href="#" class="navbar-brand">Link7</a>
+	                <a href="#" class="navbar-brand">Link8</a>
+	            </nav>
+	            <div class="col-lg-2">
+	                <ul class="pager" id="textRed">
+	                    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span>Dash Board</a></li>
+	                </ul>
+	            </div>
+	            <div class="col-lg-8">
+	                <p>You take the blue pill, the story ends. You wake up in your bed and believe whatever you want to believe. You take the red pill, you stay in Wonderland, and I show you how deep the rabbit hole goes.</p>
+	                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+	            </div>
+	            <div class="col-lg-2">
+	                <br>
+	                <br>
+	                <ul class="pager" id="textBlue">
+	                    <li class="next"><a href="#">Symptoms<span aria-hidden="true">&rarr;</span></a></li>
+	                </ul>
+	            </div>
+	            <div class="">
+	            </div>
+	        </div>
+	    </div>
 
-    <!-- Chosen plugin js -->
-    <script type="text/javascript" src="assets/javascript/chosen.jquery.min.js"></script>
-    <!-- Firebase js -->
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-	<!-- Shane's JS -->
-    <script type="text/javascript" src="assets/javascript/se.js"></script>
-	<!-- alek's js -->
-    <script type="text/javascript" src="assets/javascript/openFDA.js"></script>
-	<!-- dan's js -->
-    <script type="text/javascript" src="assets/javascript/hello.js"></script>
-	<!-- dan's js -->
-    <script type="text/javascript" src="assets/javascript/app.js"></script>
-    <!-- johnny's js -->
-    <script type="text/javascript" src="assets/javascript/magnetapp.js"></script>
-	
-
-
-
-
-
-
-
-
-</head>
-<body>
-	
-	 <div class="containerIntro" id="+MedMagnet">
-        <div class="row">
-            <h1>+MedMagnet</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="container col-lg-6">
-            <nav class="navbar navbar-inverse cover">
-                <a href="#" class="navbar-brand">Link1</a>
-                <a href="#" class="navbar-brand">Link2</a>
-                <a href="#" class="navbar-brand">Link3</a>
-                <a href="#" class="navbar-brand">Link4</a>
-                <a href="#" class="navbar-brand">Link5</a>
-                <a href="#" class="navbar-brand">Link6</a>
-                <a href="#" class="navbar-brand">Link7</a>
-                <a href="#" class="navbar-brand">Link8</a>
-            </nav>
-            <div class="col-lg-2">
-                <ul class="pager" id="textRed">
-                    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span>Dash Board</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-8">
-                <p>You take the blue pill, the story ends. You wake up in your bed and believe whatever you want to believe. You take the red pill, you stay in Wonderland, and I show you how deep the rabbit hole goes.</p>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
-            </div>
-            <div class="col-lg-2">
-                <br>
-                <br>
-                <ul class="pager" id="textBlue">
-                    <li class="next"><a href="#">Symptoms<span aria-hidden="true">&rarr;</span></a></li>
-                </ul>
-            </div>
-            <div class="">
-            </div>
-        </div>
-    </div>
-
-</body>
+	</body>
 </html>
