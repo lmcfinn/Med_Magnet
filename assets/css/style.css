@@ -129,8 +129,37 @@ body {
     transform: rotate(90deg);
     transform-origin: left top 0;
 }
+#drugPanel{
+    position: absolute;
+    top: 50%;
+    transition: all 1s;
+}
+#drugPanel.open{
 
+}
+#drugPanel:after{
+    content: "Drugs";
+    transform: rotate(90deg);
+    color: #fff;
+    background-color: #000;
+    right: 0;
+    top: 0;
+}
+#symptomPanel{
+    position: absolute;
+    top: 50%;
+}
+#symptomPanel.open{
 
+}
+#symptomPanel:before{
+    content: "Symptoms";
+    transform: rotate(90deg);
+    color: #fff;
+    background-color: #000;
+    left: 0;
+    top: 0;
+}
 /*--Blue Pill--*/
 
 
