@@ -73,7 +73,74 @@
 	    </div>
 	</div>
 
-	 <div id="drugPanel"></div>
-     <div id="symptomPanel"></div>
+	 <div id="drugPanel">
+	 	<div class="container">
+			<div class="row">
+
+				<div class="panel panel-default">
+					<div class="panel-heading">Add your prescriptions
+					</div>
+					
+					<div class="panel-body">
+						<select class="drugselect" data-placeholder="Click here to add your prescriptions">
+						
+						</select>
+						<button class="addbutton">Add</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">Your Prescription List
+						</div>
+						<div class="panel-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Drug Name</th>
+									</tr>
+								</thead>
+								<tbody id="drugname">
+										
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">Side Effects
+						</div>
+						<div class="panel-body">
+							<div id="effectdisplay">
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	 </div>
+     <div id="symptomPanel">
+     	<nav class="symptom-tab">
+		<!-- Container for entire symptom list -->
+		<div class="container">
+			<!--Blank Button to input symptoms-->
+			<div class="col-sm-6 pull-right">
+				<label for="symptom-list">List of Symptoms</label>
+				<div class="input-group">
+					<form>
+					<input id="new-symptom" type="text" class="form-control" value="" placeholder="new symptom">
+					<input id="add-symptom-button" value="Add symptom to list" type="submit">
+					</form>
+				</div>
+				<hr>
+				<div id="reported-symptoms">
+				</div>
+			</div>
+		</div>
+	</nav>
+     </div>
 	</body>
 </html>

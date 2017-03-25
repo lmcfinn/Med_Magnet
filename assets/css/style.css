@@ -129,7 +129,7 @@ body {
     transform: rotate(90deg);
     transform-origin: left top 0;
 }
-#drugPanel{
+/*#drugPanel{
     position: absolute;
     top: 50%;
     transition: all 1s;
@@ -159,7 +159,7 @@ body {
     background-color: #000;
     left: 0;
     top: 0;
-}
+}*/
 /*--Blue Pill--*/
 
 
