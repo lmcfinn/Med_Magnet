@@ -124,19 +124,25 @@ body {
     background-color: #fff;
 }
 
+.vertical-text {
+
+    transform: rotate(90deg);
+    transform-origin: left top 0;
+}
+
 
 /*--Blue Pill--*/
 
 
 /*--Middle Text Box--*/
 
-p {
+/*p {
     position: relative;
     left: 16.66666%;
     width: 49.99998%;
     text-align: justify;
     text-justify: inter-word;
-}
+}*/
 
 
 /*--Phone Size--*/
