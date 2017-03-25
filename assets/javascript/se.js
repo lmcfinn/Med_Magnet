@@ -22,15 +22,15 @@
 		    		var drugSelected;
 
 		    		// Connect with and initiate Firebase
-		    		var config = {
-			    		 apiKey: "AIzaSyBiY4bFR2V-P7j3AAiknm5p8-Bq_O1yB_Q",
-						 authDomain: "med-magnet-test.firebaseapp.com",
-						 databaseURL: "https://med-magnet-test.firebaseio.com",
-						 storageBucket: "med-magnet-test.appspot.com",
-						 messagingSenderId: "527778945969"
-			    	};
-			    	firebase.initializeApp(config);
-			    	var database = firebase.database();
+		    	// 	var config = {
+			    // 		 apiKey: "AIzaSyBiY4bFR2V-P7j3AAiknm5p8-Bq_O1yB_Q",
+						 // authDomain: "med-magnet-test.firebaseapp.com",
+						 // databaseURL: "https://med-magnet-test.firebaseio.com",
+						 // storageBucket: "med-magnet-test.appspot.com",
+						 // messagingSenderId: "527778945969"
+			    // 	};
+			    // 	firebase.initializeApp(config);
+			    // 	var database = firebase.database();
 			    	
  					
  					// Add the drugs to drugList
