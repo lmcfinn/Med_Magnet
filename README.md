@@ -7,4 +7,4 @@ Allow users to research drugs side-effects, and compare the side-effects against
 https://trello.com/b/czziz46D/med-magnet
 
 ### Project Requirement:
-https://github.com/lmcfinn/Med_Magnet/edit/master/Requirements.md
+[Requirements.md](Requirements.md)
