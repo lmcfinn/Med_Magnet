@@ -8,6 +8,9 @@
 	    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 	    <!-- Chosen plugin css -->
 	    <link rel="stylesheet" type="text/css" href="assets/css/chosen.min.css">
+
+		<!-- Create side bar page -->
+	    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
 		
 		<!-- Aniko's css -->
 	    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -28,6 +31,9 @@
 	    <!-- johnny's js -->
 	    <script type="text/javascript" src="assets/javascript/magnetapp.js"></script>
 
+
+
+
 	</head>
 	<body>
 		<div class="container">
@@ -41,14 +47,6 @@
 	    <div class="row">
 	        <div class="container">
 	            <nav class="navbar navbar-inverse cover">
-	                <!-- <a href="#" class="navbar-brand">Link1</a>
-	                <a href="#" class="navbar-brand">Link2</a>
-	                <a href="#" class="navbar-brand">Link3</a>
-	                <a href="#" class="navbar-brand">Link4</a>
-	                <a href="#" class="navbar-brand">Link5</a>
-	                <a href="#" class="navbar-brand">Link6</a>
-	                <a href="#" class="navbar-brand">Link7</a>
-	                <a href="#" class="navbar-brand">Link8</a> -->
 	            </nav>
 	         <!--    <div class="col-sm-2">
 	                <ul class="pager" id="textRed"> -->
@@ -72,61 +70,89 @@
 	        </div>
 	    </div>
 	</div>
-
-	 <div id="drugPanel">
-	 	<div class="container">
-			<div class="row">
-
-				<div class="panel panel-default">
-					<div class="panel-heading">Add your prescriptions
-					</div>
-					
-					<div class="panel-body">
-						<select class="drugselect" data-placeholder="Click here to add your prescriptions">
-						
-						</select>
-						<button class="addbutton">Add</button>
-					</div>
-				</div>
+		<div id="drugPanel">
+			<div id="openclosebtn">
+		 		<button class="btn btn-default btn-primary-sm">Drug Side Effects</button>
 			</div>
+		 	<div class="container">
+		 		<!-- The new row to contain the whole thing -->
+		 		<div class="row" id="toplevel">
+		 			<!-- This column cotains the functionalities row -->
+		 			<div class="col-md-12" id="maincanvas">
 
-			<div class="row">
-				<div class="col-md-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">Your Prescription List
-						</div>
-						<div class="panel-body">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Drug Name</th>
-									</tr>
-								</thead>
-								<tbody id="drugname">
+
+
+							<!-- This row is the actual drug functionalities sections -->
+							<div class="row">
+								<div class="panel panel-default">
+									<div class="panel-heading">Add your prescriptions
+									</div>
+									
+									<div class="panel-body">
+										<select class="drugselect" data-placeholder="Click here to add your prescriptions">
 										
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-8">
-					<div class="panel panel-default">
-						<div class="panel-heading">Side Effects
-						</div>
-						<div class="panel-body">
-							<div id="effectdisplay">
+										</select>
+										<button class="addbutton">Add</button>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>	
+							<div class="row">
+								<div class="col-md-4">
+									<div class="panel panel-default">
+										<div class="panel-heading">Your Prescription List
+										</div>
+										<div class="panel-body">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Drug Name</th>
+													</tr>
+												</thead>
+												<tbody id="drugname">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="panel panel-default">
+												<div class="panel-heading">Side Effects
+												</div>
+												<div class="panel-body">
+													<table id="effectdisplay">
+														<tbody>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="panel panel-default">
+												<div class="panel-heading">Drug Conflicts
+												</div>
+												<div class="panel-body">
+													<table id="conflictdisplay">
+														<tbody>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	
+							</div>
+				<!--       End of the whole drug section       -->
 			</div>
+	</div>
 		</div>
 	 </div>
-     <div id="symptomPanel">
+    <!--  <div id="symptomPanel">
      	<nav class="symptom-tab">
-		<!-- Container for entire symptom list -->
+		Container for entire symptom list
 		<div class="container">
-			<!--Blank Button to input symptoms-->
+			Blank Button to input symptoms
 			<div class="col-sm-6 pull-right">
 				<label for="symptom-list">List of Symptoms</label>
 				<div class="input-group">
@@ -141,6 +167,6 @@
 			</div>
 		</div>
 	</nav>
-     </div>
+     </div> -->
 	</body>
 </html>

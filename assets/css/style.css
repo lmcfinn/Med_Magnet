@@ -124,11 +124,95 @@ body {
     background-color: #fff;
 }
 
-.vertical-text {
-
+.vertical-text-left {
     transform: rotate(90deg);
     transform-origin: left top 0;
+    margin: 0;
 }
+
+.vertical-text-right {
+    transform: rotate(-90deg);
+    transform-origin: right top 0;
+    margin: 0;
+}
+
+
+#drugPanel{
+        width:100%;
+        margin-left: 0px;
+        padding-right:0px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        padding-left: 90px;
+        background-color: #ccc;
+        transfrom: translate3d(-90%, -40%, 0);
+        -webkit-transform: translate3d(-90%, -40%, 0);
+        top:58%;
+        position: absolute;
+        transition:all 1s;
+        -webkit-transition:all 1s;
+        height:400px;
+        z-index: 0;
+
+        border-color: black;
+        border-width: : 100px;
+        border-style: solid;
+
+}
+
+#drugPanel.open{
+    transfrom: translate3d(0%, -100%, 0);
+    -webkit-transform: translate3d(0%, -50%, 0);
+    height:80%;
+    background:#ECEBEB;
+    z-index: 0;
+
+}
+
+#openclosebtn {
+
+    float: right;
+    margin-right: 0px;
+    padding-right: 0px;
+    z-index: 50px;
+
+}
+
+#toplevel {
+
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+
+    position: relative;
+    background-color: white;
+
+    /*z-index:;*/
+}
+
+
+
+/*#drugPanel:after{
+    content:"";
+    position: absolute;
+    color:#fff;
+    background-color:#000;
+    right:0;
+    top:0;
+    height:100%;
+    width: 50px;
+}*/
+
+
+
+/*nav ul{
+    margin:0;
+    padding:0;
+    list-style-type: none;
+}*/
+
+
 /*#drugPanel{
     position: absolute;
     top: 50%;
