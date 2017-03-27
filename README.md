@@ -1,6 +1,6 @@
 ![Med Magnet](./assets/images/medmagnet.png)
 
-### Overview
+## Overview
 Allow users to research drugs side-effects, and compare the side-effects against their personal symptom history.
 
 ### Trello Page:
