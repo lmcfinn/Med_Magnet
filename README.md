@@ -1,10 +1,8 @@
 ![Med Magnet](./assets/images/medmagnet.png)
 
 ## Overview
-Allow users to research drugs side-effects, and compare the side-effects against their personal symptom history.
+Allow users to quickly research known drugs side-effects, and compare those side-effects against their own personal symptom history.
 
-### Trello Page:
-https://trello.com/b/czziz46D/med-magnet
+**Trello Page:** https://trello.com/b/czziz46D/med-magnet
 
-### Project Requirement:
-[Requirements.md](Requirements.md)
+**Project Requirements:** [Requirements.md](Requirements.md)
