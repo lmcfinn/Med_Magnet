@@ -1,13 +1,7 @@
 $(document).ready(function() {
-
     var userEtag = '';
     var currentUser = {};
-    var symptoms = {
-        nausea: {
-            date: [121212],
-            intensity: [1]
-        }
-    };
+    var userSavedSymptomObject = {};
     var drugSelected = [];
     var currentUserID = "Default";
     var currentUserImg = "https://lh4.googleusercontent.com/--2N9gX9g0Bg/AAAAAAAAAAI/AAAAAAAAIQs/xdjw18I2Qf8/photo.jpg?sz=50"
@@ -35,7 +29,8 @@ $(document).ready(function() {
             currentUserName = currentUser.username;
             currentUserImg = currentUser.profile_picture;
             drugSelected = JSON.parse(currentUser.drugList);
-            symptoms = JSON.parse(currentUser.symptomsList);
+            userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
+
         });
     };
 
@@ -119,28 +114,14 @@ $(document).ready(function() {
 
     var setDrugtoProfile = function(drugs) {
 
-        writeUserData(currentUserID, currentUserName, currentUserImg, drugs, symptoms);
-    }
-
-
-    var setSymptomtoProfile = function(symptoms) {
-
-        writeUserData(currentUserID, currentUserName, currentUserImg, drugs, symptoms);
+        writeUserData(currentUserID, currentUserName, currentUserImg, drugs, userSavedSymptomObject);
     }
 
 
     getUser(currentUserID);
 
 
-    setTimeout(function() {
-        console.log(currentUser)
 
-
-        console.log(currentUserName);
-        console.log(currentUserImg);
-        console.log(drugSelected);
-        console.log(symptoms);
-    }, 200);
     //URL = Base + (event or label) + apiKey + searchParm
 
     //global variable to use inside api functions
@@ -187,9 +168,9 @@ $(document).ready(function() {
     });
 
     // Retrieve druglist from Firebase to display in the table
-    database.ref('users/'+ currentUserID + '/drugList').on("value", function(snapshot) {
+    database.ref('users/' + currentUserID + '/drugList').on("value", function(snapshot) {
         var drugList = JSON.parse(snapshot.val());
-        
+
         $(".table > #drugname").empty();
 
         for (var i = 0; i < drugList.length; i++) {
@@ -234,8 +215,8 @@ $(document).ready(function() {
 
         drugSelected.splice(index, 1);
 
-        writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, symptoms);
-        
+        writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+
     });
 
     //openFDA side effects array based on drug brand name
@@ -337,5 +318,82 @@ $(document).ready(function() {
         });
 
     }
+
+
+    database.ref('users/' + currentUserID + '/symptomsList').on("value", function(snapshot) {
+        var symptomList = JSON.parse(snapshot.val());
+
+
+        // Nested for loops to parse User's symptom data and render them to the DOM
+        for (symptom in symptomList) {
+
+            for (var i = 0; i < symptomList[symptom].length; i++) {
+                console.log(symptomList[symptom][i]);
+                console.log(symptomList[symptom][i].date);
+                console.log(symptomList[symptom][i].intensity);
+
+
+                var symptomContainer = $("<tr>");
+                // symptom is tagged with item-symptom name
+                symptomContainer.attr("id", "item-" + symptom);
+
+                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox'></td>";
+
+                symptomContainer.append(symptomListTr);
+
+                // attach new symptom data to table
+                $(".table-symptoms").append(symptomContainer);
+
+                $("#new-symptom-input").val('');
+                $("#new-symptom-date").val('');
+                $("#intensity").val('');
+                $("#new-symptom-input").focus();
+
+            }
+        }
+
+    });
+
+
+
+    // this object should be an object of arrays centered on the symptom with multiple dates and multiple intensities
+
+    $("#add-symptom-button").on("click", function runSymptom(event) {
+        event.preventDefault();
+
+        var userSymptomInput = $("#new-symptom-input").val().trim();
+        var userDateInput = $("#new-symptom-date").val();
+        var userIntensityInput = $("#intensity option:selected").text();
+
+
+        if (userSavedSymptomObject[userSymptomInput] === undefined) {
+            userSavedSymptomObject[userSymptomInput] = [];
+        }
+
+        userSavedSymptomObject[userSymptomInput].push({
+            date: $("#new-symptom-date").val(),
+            intensity: $("#intensity option:selected").text()
+        });
+
+        console.log(userSavedSymptomObject);
+
+        writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+
+        // create new row for new symptom
+
+
+    });
+
+
+    $(document).on("click", "#checkbox", function(e) {
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+
+
 
 });

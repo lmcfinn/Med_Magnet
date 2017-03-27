@@ -135,23 +135,63 @@
   </div>
   <div id="symptomPanel">
     <nav class="symptom-tab">
-      <!-- Container for entire symptom list -->
-      <div class="container">
-        <!--Blank Button to input symptoms-->
-        <div class="col-sm-6 pull-right">
-          <label for="symptom-list">List of Symptoms</label>
-          <div class="input-group">
-            <form>
-              <input id="new-symptom" type="text" class="form-control" value="" placeholder="new symptom">
-              <input id="add-symptom-button" value="Add symptom to list" type="submit">
+    <!-- Container for entire symptom list -->
+    <div class="container-fluid">
+      <div class="col-sm-5 pull left">
+        <div class="row">
+          graph in this area
+          <!-- This is the div where symptom graph data will display -->
+        </div>
+      </div>
+      <!--Blank Button to input symptoms-->
+      <div class="col-sm-7 pull-right">
+<!--        <label for="symptom-list">List of Symptoms</label>
+          <form class="input-area">
+            <input id="new-symptom-input" type="text" value="" placeholder="new symptom">
+            <input id="add-symptom-button" value="Add symptom" type="submit">
+          </form>
+        <hr>
+        <div id="reported-symptoms">
+        </div>   -->  
+        <div class="panel panel-default">
+          <!-- container for inputing symptom date, time, severity, duration, comments -->
+          <label for="panel-heading">List of Symptoms</div>
+          <table class="table table-bordered table-striped table-symptoms">
+            <thead>
+              <th>Symptom</th>
+              <th>Date</th>
+              <th>Intensity</th>
+              <th>Remove</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <form>
+                  <input id="add-symptom-button" value="add" type="submit"><input id="new-symptom-input" type="text" value="" placeholder="new symptom" required>
+                </td>
+                <td class="date-data">
+                  <input id="new-symptom-date" type="date" value="" placeholder="" required>
+                </td>
+                <td class="intensity-data">
+                  <select id="intensity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </td>
+                <td class="remove-click">
+                </td>
+              </tr>
+            </tbody>
             </form>
-          </div>
-          <hr>
-          <div id="reported-symptoms">
+          </table>
           </div>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
   </div>
 </body>
 
