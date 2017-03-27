@@ -1,10 +1,18 @@
 $(document).ready(function() {
 
     var userEtag = '';
-
-
-
-// firebas congfig and cached functions
+    var currentUser = {};
+    var symptoms = {
+        nausea: {
+            date: [121212],
+            intensity: [1]
+        }
+    };
+    var drugSelected = [];
+    var currentUserID = "Default";
+    var currentUserImg = "https://lh4.googleusercontent.com/--2N9gX9g0Bg/AAAAAAAAAAI/AAAAAAAAIQs/xdjw18I2Qf8/photo.jpg?sz=50"
+    var currentUserName = "Jimmy Crack-Corn"
+        // firebas congfig and cached functions
     var config = {
         apiKey: "AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8",
         authDomain: "my-awesome-project-2b194.firebaseapp.com",
@@ -16,7 +24,20 @@ $(document).ready(function() {
 
     var database = firebase.database();
     var databaseRef = database.ref();
+    var userList = database.ref('users/');
 
+
+
+    var getUser = function(userID) {
+        var user;
+        database.ref('/users/' + userID).once('value').then(function(snapshot) {
+            currentUser = snapshot.val();
+            currentUserName = currentUser.username;
+            currentUserImg = currentUser.profile_picture;
+            drugSelected = JSON.parse(currentUser.drugList);
+            symptoms = JSON.parse(currentUser.symptomsList);
+        });
+    };
 
     var delete_cookie = function(name) {
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -27,13 +48,13 @@ $(document).ready(function() {
         localStorage.removeItem('hello');
         location.reload();
         delete_cookie('NID');
-
     };
 
 
     var signin = function() {
         hello('google').login();
-    }
+    };
+
 
 
     // Hello init, contains browers secret
@@ -68,17 +89,23 @@ $(document).ready(function() {
             console.log(googAccessToken);
             console.log(googExpires);
 
-            writeUserData(r.id, r.name, r.email, r.thumbnail);
 
+            currentUserID = r.id;
+            currentUserImg = r.thumbnail;
+            currentUserName = r.name;
+            getuser(currentUserID);
         });
     });
 
+
+
     // writes user data to firebase
-    function writeUserData(userId, name, email, imageUrl) {
+    function writeUserData(userId, name, imageUrl, drugs, symptoms) {
         firebase.database().ref('users/' + userId).set({
             username: name,
             profile_picture: imageUrl,
-
+            drugList: JSON.stringify(drugs),
+            symptomsList: JSON.stringify(symptoms)
         });
     }
 
@@ -90,8 +117,30 @@ $(document).ready(function() {
         signout();
     })
 
+    var setDrugtoProfile = function(drugs) {
+
+        writeUserData(currentUserID, currentUserName, currentUserImg, drugs, symptoms);
+    }
 
 
+    var setSymptomtoProfile = function(symptoms) {
+
+        writeUserData(currentUserID, currentUserName, currentUserImg, drugs, symptoms);
+    }
+
+
+    getUser(currentUserID);
+
+
+    setTimeout(function() {
+        console.log(currentUser)
+
+
+        console.log(currentUserName);
+        console.log(currentUserImg);
+        console.log(drugSelected);
+        console.log(symptoms);
+    }, 200);
     //URL = Base + (event or label) + apiKey + searchParm
 
     //global variable to use inside api functions
@@ -120,7 +169,7 @@ $(document).ready(function() {
         width: "80%"
     });
 
-    var drugSelected = [];
+
 
 
 
@@ -134,65 +183,39 @@ $(document).ready(function() {
 
         console.log("array: " + drugSelected)
 
-        // Push the value to Firebase
-        // database.ref().push({
-
-        //     drugSelected
-
-        // });
-
+        setDrugtoProfile(drugSelected);
     });
 
-    // Retrieve data from Firebase to display in the table
-    database.ref().on("child_added", function(childSnapshot) {
-
-
-        var userDrug;
-
+    // Retrieve druglist from Firebase to display in the table
+    database.ref('users/'+ currentUserID + '/drugList').on("value", function(snapshot) {
+        var drugList = JSON.parse(snapshot.val());
+        
         $(".table > #drugname").empty();
-        for (var i = 0; i < drugSelected.length; i++) {
 
-            userDrug = childSnapshot.val().drugSelected[i];
+        for (var i = 0; i < drugList.length; i++) {
 
             // Append data to the DOM (data from firebase)
-
-            $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + userDrug + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs'>Delete</button></td>" + "</tr>");
-
+            $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">Delete</button></td>" + "</tr>");
         }
-
-
-
-        // Append data to the DOM (data from firebase)
-        // $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + userDrug + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs'>Delete</button></td>" + "</tr>");
-
     });
 
 
     // OnCick function to make ajax call to display side effects of each drug from the API database
     $(document).on("click", ".drugadded", function() {
-
         //      Setting up the ajax URL
         var drugPicked = $(this).text().toUpperCase();
-
-
         getSideEffects(drugPicked, function(sideEffects) {
 
             for (var i = 0; i < sideEffects.length; i++) {
-
                 $("#effectdisplay").append("<tr><td>" + sideEffects[i] + "</td></tr>");
-
             }
-
         })
 
         getConflictingDrugs(drugPicked, function(drugConflicts) {
 
             for (var i = 0; i < drugConflicts.length; i++) {
-
                 $("#conflictdisplay").append("<tr><td>" + drugConflicts[i] + "</td></tr>");
-
             }
-
         });
 
         // Clear out previous side effects
@@ -206,12 +229,13 @@ $(document).ready(function() {
         // Delete "tr" from the DOM, but not on Firebase
         $(this).parents("tr").remove();
 
-        // How to delete data from Firebase??
-        database.ref().on("child_removed", function(childSnapshot) {
+        var toDelete = this.dataset.drug;
+        var index = drugSelected.indexOf(toDelete);
 
-            database.ref().child().remove()
+        drugSelected.splice(index, 1);
 
-        });
+        writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, symptoms);
+        
     });
 
     //openFDA side effects array based on drug brand name
