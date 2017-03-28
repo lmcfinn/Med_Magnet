@@ -346,7 +346,8 @@ $(document).ready(function() {
                 // symptom is tagged with item-symptom name
                 symptomContainer.attr("id", "item-" + symptom);
 
-                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox'></td>";
+
+                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom="+ symptom.replace(/\s/g,'-') +" data-index-number= " + i + "></td>";
 
                 symptomContainer.append(symptomListTr);
 
@@ -396,10 +397,30 @@ $(document).ready(function() {
 
     $(document).on("click", "#checkbox", function(e) {
         $(this).closest('tr').remove();
+        var tableIndex = this.dataset.indexNumber;
+        var tableSymptom = this.dataset.symptom;
+        removeTR(tableSymptom, tableIndex);
+
     });
 
 
+    var removeTR = function(symptom, index){
+        console.log(symptom +" :"+ index);
 
+        symptom = symptom.replace(/-/g, " ");
+
+        console.log(userSavedSymptomObject[symptom].length);
+
+        userSavedSymptomObject[symptom].splice(index, 1);
+        console.log(userSavedSymptomObject[symptom].length);
+
+        if (index === undefined || userSavedSymptomObject[symptom].length === 0){
+            console.log("DELETE");
+            delete userSavedSymptomObject[symptom];
+        }
+
+        console.log(userSavedSymptomObject);
+    }
 
 $("#openclosebtn").on("click", function(){
 
