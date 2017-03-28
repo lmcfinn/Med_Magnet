@@ -124,26 +124,35 @@ body {
     background-color: #fff;
 }
 
-.vertical-text-left {
+/*#rotateLeft {
+    z-index: 20;
+    position: relative;
+    right: 400px;
+    margin-top: 23px;
+    width: 100px;
+    height: 30px;
     transform: rotate(90deg);
-    transform-origin: left top 0;
-    margin: 0;
-}
+    float:right;
+}*/
 
-.vertical-text-right {
+#rotateRight {
+    z-index: 20;
+    position: relative;
+    left: 400px;
+    margin-top: 23px;
+    width: 100px;
+    height: 30px;
     transform: rotate(-90deg);
-    transform-origin: right top 0;
-    margin: 0;
 }
 
 
 #drugPanel{
-        width:100%;
+        width:90%;
         margin-left: 0px;
         padding-right:0px;
         padding-top: 50px;
         padding-bottom: 50px;
-        padding-left: 90px;
+        padding-left: -30px;
         background-color: #ccc;
         transfrom: translate3d(-90%, -40%, 0);
         -webkit-transform: translate3d(-90%, -40%, 0);
@@ -169,14 +178,61 @@ body {
 
 }
 
-#openclosebtn {
+#seopenbtn {
 
     float: right;
     margin-right: 0px;
     padding-right: 0px;
-    z-index: 50px;
+    z-index: 50;
+    position: relative;
 
 }
+
+#symptomPanel{
+        width:91.5%;
+        margin-left: 0px;
+        padding-right:0px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        padding-left: 0px;
+        background-color: #F5F5DC;
+        transfrom: translate3d(90%, 200%, 0);
+        -webkit-transform: translate3d(90%, 40%, 0);
+        top:9.5%;
+        position: absolute;
+        transition:all 1s;
+        -webkit-transition:all 1s;
+        height:400px;
+        z-index: 0;
+
+        border-color: black;
+        border-width: : 100px;
+        border-style: solid;
+
+}
+
+#symptomPanel.open{
+    transfrom: translate3d(90%, 240%, 0);
+    -webkit-transform: translate3d(10%, 10%, 0);
+    height:80.4%;
+    background:#ECEBEB;
+    z-index: 0;
+
+}
+
+#symopenbtn {
+
+    float: left;
+    margin-left: 0px;
+    padding-left: 0px;
+    z-index: 50;
+    position: relative;
+
+}
+
+
+
+
 
 #toplevel {
 
@@ -205,57 +261,3 @@ body {
 }*/
 
 
-
-/*nav ul{
-    margin:0;
-    padding:0;
-    list-style-type: none;
-}*/
-
-
-/*#drugPanel{
-    position: absolute;
-    top: 50%;
-    transition: all 1s;
-}
-#drugPanel.open{
-
-}
-#drugPanel:after{
-    content: "Drugs";
-    transform: rotate(90deg);
-    color: #fff;
-    background-color: #000;
-    right: 0;
-    top: 0;
-}
-#symptomPanel{
-    position: absolute;
-    top: 50%;
-}
-#symptomPanel.open{
-
-}
-#symptomPanel:before{
-    content: "Symptoms";
-    transform: rotate(90deg);
-    color: #fff;
-    background-color: #000;
-    left: 0;
-    top: 0;
-}*/
-/*--Blue Pill--*/
-
-
-/*--Middle Text Box--*/
-
-/*p {
-    position: relative;
-    left: 16.66666%;
-    width: 49.99998%;
-    text-align: justify;
-    text-justify: inter-word;
-}*/
-
-
-/*--Phone Size--*/

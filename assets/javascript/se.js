@@ -13,11 +13,19 @@ $(document).ready(function(){
 
 
 
-	$("#openclosebtn").on("click", function(){
+	$("#seopenbtn").on("click", function(){
 
 		$("#drugPanel").toggleClass("open");
 
 	});
+
+	$("#symopenbtn").on("click", function(){
+
+		$("#symptomPanel").toggleClass("open");
+
+	});
+
+	
 
 	
 
