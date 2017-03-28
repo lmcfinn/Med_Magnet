@@ -13,15 +13,17 @@ $(document).ready(function(){
 
 
 
-	$("#seopenbtn").on("click", function(){
+	$("#drugPanelBtn").on("click", function(){
 
 		$("#drugPanel").toggleClass("open");
 
 	});
 
-	$("#symopenbtn").on("click", function(){
+	$("#symptomPanelBtn").on("click", function(){
 
 		$("#symptomPanel").toggleClass("open");
+
+		
 
 	});
 
