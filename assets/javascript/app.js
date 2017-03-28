@@ -3,9 +3,9 @@ $(document).ready(function() {
     var currentUser = {};
     var userSavedSymptomObject = {};
     var drugSelected = [];
-    var currentUserID = "Default";
-    var currentUserImg = "https://lh4.googleusercontent.com/--2N9gX9g0Bg/AAAAAAAAAAI/AAAAAAAAIQs/xdjw18I2Qf8/photo.jpg?sz=50"
-    var currentUserName = "Jimmy Crack-Corn"
+    var currentUserID = "0123456789";
+    var currentUserImg = "http://i0.wp.com/radaronline.com/wp-content/uploads/2014/06/seth-rogan-james-franco.jpg?resize=236%2C169"
+    var currentUserName = "James Franco"
         // firebas congfig and cached functions
     var config = {
         apiKey: "AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8",
@@ -22,17 +22,36 @@ $(document).ready(function() {
 
 
 
+
+
     var getUser = function(userID) {
-        var user;
+
+        // var user;
+
         database.ref('/users/' + userID).once('value').then(function(snapshot) {
+
             currentUser = snapshot.val();
-            currentUserName = currentUser.username;
-            currentUserImg = currentUser.profile_picture;
-            if (currentUser.druglist) {
-                drugSelected = JSON.parse(currentUser.drugList);
-            }
-            if (currentUser.symptomsList) {
-                userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
+
+            console.log(currentUser);
+
+            if (currentUser) {
+                currentUserName = currentUser.username;
+                currentUserImg = currentUser.profile_picture;
+                if (currentUser.druglist) {
+                    drugSelected = JSON.parse(currentUser.drugList);
+                    renderDrugList(drugSelected);
+                } else {
+                    drugSelected = [];
+                    renderDrugList(drugSelected);
+                }
+                if (currentUser.symptomsList) {
+                    userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
+                } else {
+                    userSavedSymptomObject = {};
+                }
+            } else {
+                writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+                renderDrugList(drugSelected);
             }
         });
     };
@@ -44,8 +63,9 @@ $(document).ready(function() {
     var signout = function() {
         hello('google').logout()
         localStorage.removeItem('hello');
-        location.reload();
         delete_cookie('NID');
+        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.com/Med_Magnet/index.html";
+        location.reload();
     };
 
 
@@ -179,6 +199,12 @@ $(document).ready(function() {
     // Retrieve druglist from Firebase to display in the table
     database.ref('users/' + currentUserID + '/drugList').on("value", function(snapshot) {
         var drugList = JSON.parse(snapshot.val());
+        renderDrugList(drugList);
+
+    });
+
+
+    var renderDrugList = function(drugList) {
 
         $(".table > #drugname").empty();
 
@@ -187,8 +213,7 @@ $(document).ready(function() {
             // Append data to the DOM (data from firebase)
             $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">Delete</button></td>" + "</tr>");
         }
-    });
-
+    }
 
     // OnCick function to make ajax call to display side effects of each drug from the API database
     $(document).on("click", ".drugadded", function() {
@@ -223,7 +248,7 @@ $(document).ready(function() {
         var index = drugSelected.indexOf(toDelete);
 
         drugSelected.splice(index, 1);
-
+        renderDrugList();
         writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
 
     });
