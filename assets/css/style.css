@@ -167,7 +167,7 @@ body {
   transform: rotate(90deg);
 }*/
 
-#symptomPanel {
+/*#symptomPanel {
   width: 10%;
   margin-left: 0px;
   padding-right: 0px;
@@ -199,7 +199,7 @@ body {
 }
 
 #symcanvas {
-  /*margin-left: 100px;*/
+  /*margin-left: 100px;
 }
 
 #symptomPanelBtn {
@@ -213,31 +213,46 @@ body {
   position: relative;
   transform: rotate(90deg);
 }
+*/
 
-
-body,
+/*body,
 html {
   margin: 0;
   padding: 0;
+}*/
+
+#drugCanvas {
+    display:none;
+  /*  margin-top: 20px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+    margin-right: 0px;
+    padding-right: 0px;
+    padding-left: 0px*/
 }
 
 #drugPanel {
-  width: 50%;
-  padding: 20px;
-  background-color: #ccc;
-  transfrom: translate3d(-90%, -50%, 0);
-  -webkit-transform: translate3d(-90%, -50%, 0);
-  top: 50%;
+  width: 50%;  
+  transfrom: translate3d(-100%, -55%, 0);
+  -webkit-transform: translate3d(-100%, -55%, 0);
+  top: 500px;
   position: absolute;
   transition: all 1s;
-  -webkit-transition: all 1s;
-  height: 400px;
+  -webkit-transition: all 1.5s;
+  height: 600px;
+  padding-right: 0;
+  background: -webkit-gradient(
+          linear, right top, left top, from(rgba(255, 255, 255, 0)),
+          to(rgba(0, 0, 100, 1.0))
+        );
 }
 
 #drugPanel.open {
-  transfrom: translate3d(0%, -50%, 0);
-  -webkit-transform: translate3d(0%, -50%, 0);
-  
+  transfrom: translate3d(0%, -55%, 0);
+  -webkit-transform: translate3d(0%, -55%, 0);
+    width: 70%;
+    z-index: 100;
+    background-color: #ccc;
 }
 
 #clickLeft {
@@ -247,16 +262,72 @@ html {
   background-color: #000;
   right: 0;
   top: 0;
-  height: 100%;
+  height: 600px;
   width: 50px;
 }
 
-#drugPanel ul {
+#drugBtn {
+  transform: rotate(90deg);
+}
+
+#symptomBtn{
+    transform: rotate(90deg);
+}
+#symptomCanvas {
+    display:none;
+}
+
+#symptomPanel {
+  width: 0%;
+  padding: 20px;
+  
+  transfrom: translate3d(5%, -55%, 0);
+  -webkit-transform: translate3d(5%, -55%, 0);
+  top: 500px;
+  position: absolute;
+  transition: all 1s;
+  -webkit-transition: all 2s;
+  height: 600px;
+  padding-left: 0;
+  background: -webkit-gradient(
+          linear, left top, right top, from(rgba(255, 255, 255, 0)),
+          to(rgba(100, 0, 0, 1.0))
+        );
+}
+
+#symptomPanel.open {
+  transfrom: translate3d(0%, -55%, 0);
+  -webkit-transform: translate3d(0%, -55%, 0);
+    width: 70%;
+    z-index: 100;
+    background-color: #ccc;
+}
+
+
+
+#clickRight {
+  content: "";
+  position: absolute;
+  color: #ccc;
+  background-color: #000;
+  left: 0;
+  top: 0;
+  height: 600px;
+  width: 50px;
+}
+
+#SymptomPanel ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-h2 {
-  transform: rotate(90deg);
+.push {
+    height: 75px;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    margin: 0;
 }

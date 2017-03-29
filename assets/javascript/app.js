@@ -20,7 +20,8 @@ $(document).ready(function() {
     var databaseRef = database.ref();
     var userList = database.ref('users/');
 
-
+    var isDrugPanelOpen = false;
+    var isSympPanelOpen = false;
 
 
 
@@ -173,7 +174,7 @@ $(document).ready(function() {
         $(".table > #drugname").empty();
         for (var i = 0; i < drugList.length; i++) {
             // Append data to the DOM (data from firebase)
-            $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">Delete</button></td>" + "</tr>");
+            $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">x</td>" + "</tr>");
         }
     }
 
@@ -413,10 +414,10 @@ $(document).ready(function() {
             userSavedSymptomObject[symptom].splice(index, 1);
             console.log(userSavedSymptomObject[symptom].length);
         }
-        console.log(typeof(index))
+
 
         if (typeof(index) === 'undefined' || userSavedSymptomObject[symptom].length === 0) {
-            console.log("DELETE");
+
             delete userSavedSymptomObject[symptom];
         }
 
@@ -428,32 +429,59 @@ $(document).ready(function() {
 
 
     $('#clickLeft').on('click', function() {
-        if ($('#symptomPanel').hasClass('open')) {
-            $('#symptomPanel').removeClass('open');
+        
+        if (!isDrugPanelOpen) {
+            $('#drugCanvas').fadeIn('slow', function() {});
+        } else {
+            $('#drugCanvas').fadeOut('slow', function() {});
         }
 
+        if (isSympPanelOpen) {
+            $('#symptomCanvas').fadeOut('fast', function() {});
+        }
+
+        if ($('#symptomPanel').hasClass('open')) {
+            $('#symptomPanel').removeClass('open');
+            isSympPanelOpen = false;
+        }
 
         if ($('#drugPanel').hasClass('open')) {
             $('#drugPanel').removeClass('open');
+            isDrugPanelOpen = false;
         } else {
             $('#drugPanel').addClass('open');
+            isDrugPanelOpen = true;
+        }
+    });
+
+    $('#clickRight').on('click', function() {
+
+        if (!isSympPanelOpen) {
+            setTimeout(function(){
+             $('#symptomCanvas').fadeIn('slow', function() {});
+            }, 1500)
+        } else {
+            $('#symptomCanvas').fadeOut('fast', function() {});
+        }
+
+        if (isDrugPanelOpen) {
+            $('#drugCanvas').fadeOut('slow', function() {});
         }
 
 
-    });
-
-    $('#symptomPanelBtn').on('click', function() {
         if ($('#drugPanel').hasClass('open')) {
             $('#drugPanel').removeClass('open');
+            isDrugPanelOpen = false;
         }
 
 
         if ($('#symptomPanel').hasClass('open')) {
             $('#symptomPanel').removeClass('open');
+            isSympPanelOpen = false;
         } else {
             $('#symptomPanel').addClass('open');
+            isSympPanelOpen = true;
         }
-
 
 
     });

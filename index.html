@@ -3,6 +3,8 @@
 
 <head>
   <title>Med Magnet</title>
+  <!-- bootstrap scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
@@ -30,85 +32,140 @@
       </div>
     </div>
     <div class="row">
-      <div class="container">
-        <nav class="navbar navbar-inverse cover">
-          <button id="signin">Google Sign On</button>
-          <button id="signout">Google Logout</button>
-          <div id="profile"> </div>
-        </nav>
-        <div class="col-sm-10 col-sm-offset-1">
-          <p>You take the blue pill, the story ends. You wake up in your bed and believe whatever you want to believe. You take the red pill, you stay in Wonderland, and I show you how deep the rabbit hole goes.</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+      <nav class="navbar navbar-inverse cover">
+        <div id="profile" class="pull-right">
+          <button class="btn btn-primary" id="signin">
+            <img id="profileImg" src="assets/images/head.png" alt="Google Sign On" title="Google Sign On">
+          </button>
+          <button class="hidden" id="signout">Google Logout</button>
         </div>
+      </nav>
+      <div class="col-xs-10 col-xs-offset-2">
+        <h2>Welcome to Med Magnet - <br> Your one stop shop for drug side-effect lookup and logging!</h2>
+        <p></p>
       </div>
     </div>
     <div id="drugPanel">
-      <div id='clickLeft'>
-        <H2>Drugs</H2>
-      </div>
-      <ul>
-        <li>Nausea</li>
-        <li>Heart Burn</li>
-        <li>Upset Stomach</li>
-      </ul>
-    </div>
-    <div id="symptomPanel">
-      <div class="container">
-        <div class="col-sm-3">
-          <div>
-            <button class="btn btn-default btn-primary-sm" id="symptomPanelBtn">Symptom Tracker</button>
-          </div>
-        </div>
-        <div class="col-sm-9" id="symptomcanvas">
-          <nav class="symptom-tab">
-            <!-- Container for entire symptom list -->
-            <div class="container-fluid">
-              <div class="col-sm-4 pull left">
-                <div class="row">
-                  graph in this area
-                  <!-- This is the div where symptom graph data will display -->
-                </div>
+      <div class="col-xs-11" id="drugCanvas">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">Add your prescriptions
               </div>
-              <!--Blank Button to input symptoms-->
-              <div class="col-sm-8 pull-right">
-                <div class="panel panel-default">
-                  <!-- container for inputing symptom date, time, severity, duration, comments -->
-                  <label for="panel-heading">Add A Symptoms</label>
-                  <form action="/action_page.php">
-                    <select class="new-symptom-input" data-placeholder="add your symptom">
-                    </select>
-                    <input id="new-symptom-date" type="date" value="" placeholder="">
-                    <select id="intensity" data-placeholder="select intensity">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                    </select>
-                    <input id="add-symptom-button" value="add" type="submit">
-                  </form>
-                </div>
-                <div class="panel-body">
-                  <table class="table table-bordered table-striped table-symptoms">
-                    <thead>
-                      <th>Symptom</th>
-                      <th>Date</th>
-                      <th>Intensity</th>
-                      <th>Remove</th>
-                    </thead>
-                    <tbody id="symptomTable">
-                    </tbody>
-                  </table>
-                </div>
-                </label>
+              <div class="panel-body">
+                <select class="drugselect" data-placeholder="Click here to add your prescriptions">
+                </select>
+                <button class="addbutton">Add</button>
               </div>
             </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Your Prescription List
+              </div>
+              <div class="panel-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Drug Name</th>
+                    </tr>
+                  </thead>
+                  <tbody id="drugname">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Side Effects
+              </div>
+              <div class="panel-body">
+                <table id="effectdisplay">
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Drug Conflicts
+              </div>
+              <div class="panel-body">
+                <table id="conflictdisplay">
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-1 visible pull-right">
+        <div id='clickLeft'>
+          <h2 id="drugBtn">Drugs</h2>
+        </div>
+      </div>
+    </div>
+    <div id="symptomPanel">
+      <div id='clickRight'>
+        <h2 id='symptomBtn'>Symptom</h2>
+      </div>
+      <div class="col-xs-1 visible pull-left">
+      </div>
+      <div class="col-xs-11" id="symptomCanvas">
+        <nav class="symptom-tab">
+          <!-- Container for entire symptom list -->
+          <div class="col-sm-4 pull left">
+            <div class="row">
+              <!-- This is the div where symptom graph data will display -->
+              <div id="pieChart">
+              </div>
+            </div>
+          </div>
+          <!--Blank Button to input symptoms-->
+          <div class="col-sm-8 pull-right">
+            <div class="panel panel-default">
+              <!-- container for inputing symptom date, time, severity, duration, comments -->
+              <label for="panel-heading">Add A Symptoms</label>
+              <form action="/action_page.php">
+                <select class="new-symptom-input" data-placeholder="add your symptom">
+                </select>
+                <input id="new-symptom-date" type="date" value="" placeholder="">
+                <select id="intensity" data-placeholder="select intensity">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <input id="add-symptom-button" value="add" type="submit">
+              </form>
+            </div>
+            <div class="panel-body">
+              <table class="table table-bordered table-striped table-symptoms">
+                <thead>
+                  <th>Symptom</th>
+                  <th>Date</th>
+                  <th>Intensity</th>
+                  <th>Remove</th>
+                </thead>
+                <tbody id="symptomTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
         </nav>
       </div>
     </div>
-  </div>
-  </div>
+    </div>
+    <div class="push"></div>
+    <div class="footer navbar navbar-default navbar-fixed-bottom align-middle text-default text-center text-muted">
+      <p>&copy; Copyright 2017 Abusive Sponge Industries</p>
+    </div>
 </body>
 
 </html>
