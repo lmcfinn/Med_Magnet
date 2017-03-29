@@ -230,7 +230,7 @@ body {
 
 }
 
-#drugClick {
+#clickLeft {
 
     content:"";
     position: absolute;
@@ -242,7 +242,7 @@ body {
     width: 50px;
 }
 
-#drugClickCopy {
+#clickLeftText {
     transform: rotate(90deg);
     font-size: 10px;
     color: white;
