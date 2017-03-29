@@ -30,7 +30,7 @@ $(document).ready(function() {
             console.log(currentUser);
             if (!currentUser) {
                 writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-                location.reload(forceGet);
+                location.reload(true);
             } else {
                 currentUserName = currentUser.username;
                 currentUserImg = currentUser.profile_picture;
@@ -50,8 +50,7 @@ $(document).ready(function() {
         hello('google').logout()
         localStorage.removeItem('hello');
         delete_cookie('NID');
-        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.com/Med_Magnet/index.html";
-        location.reload(forceGet);
+        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.io/Med_Magnet/index.html";
     };
 
     var signin = function() {
@@ -68,9 +67,9 @@ $(document).ready(function() {
     hello.on('auth.login', function(auth) {
         // Call user information, for the given network
         hello(auth.network).api('me').then(function(r) {
-            console.log(r);
+            
             // Inject it into the container
-            var label = document.getElementById('profile_' + auth.network);
+            var label = $('#profile' + auth.network);
             if (!label) {
                 label = document.createElement('div');
                 label.id = 'profile_' + auth.network;
@@ -91,7 +90,7 @@ $(document).ready(function() {
     });
 
     // writes user data to firebase
-    function writeUserData(userId, name, imageUrl, drugs, symptoms) {
+    var writeUserData = function(userId, name, imageUrl, drugs, symptoms) {
         firebase.database().ref('users/' + userId).update({
             username: name,
             profile_picture: imageUrl,
@@ -170,7 +169,7 @@ $(document).ready(function() {
     });
 
 
-    var renderDrugList = function(drugList) {      
+    var renderDrugList = function(drugList) {     
         $(".table > #drugname").empty();
         for (var i = 0; i < drugList.length; i++) {
             // Append data to the DOM (data from firebase)
@@ -324,6 +323,8 @@ $(document).ready(function() {
     database.ref('users/' + currentUserID + '/symptomsList').on("value", function(snapshot) {
         var symptomList = JSON.parse(snapshot.val());
 
+        $("#symptomsDisplay").empty();
+
         for (symptom in symptomList) {
 
             for (var i = 0; i < symptomList[symptom].length; i++) {
@@ -340,7 +341,7 @@ $(document).ready(function() {
                 symptomContainer.append(symptomListTr);
 
                 // attach new symptom data to table
-                $(".table-symptoms").append(symptomContainer);
+                $("#symptomsDisplay").append(symptomContainer);
 
                 $("#new-symptom-input").val('');
                 $("#new-symptom-date").val('');
@@ -358,6 +359,8 @@ $(document).ready(function() {
 
     $("#add-symptom-button").on("click", function runSymptom(event) {
         event.preventDefault();
+
+
 
         var userSymptomInput = $("#new-symptom-input").val().trim();
         var userDateInput = $("#new-symptom-date").val();
@@ -410,9 +413,10 @@ $(document).ready(function() {
             delete userSavedSymptomObject[symptom];
         }
 
+
         console.log(userSavedSymptomObject);
         writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-
+        console.log("HELP");
     }
 
 

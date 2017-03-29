@@ -23,7 +23,7 @@
   <!-- dan's js -->
   <script type="text/javascript" src="assets/javascript/app.js"></script>
   <!-- johnny's js -->
-  <script type="text/javascript" src="assets/javascript/magnetapp.js"></script>
+  <!-- <script type="text/javascript" src="assets/javascript/magnetapp.js"></script> -->
 </head>
 
 <body>
@@ -76,11 +76,11 @@
           <div class="panel-heading">Add your prescriptions
           </div>
           <div class="panel-body">
-          <form>
-            <select class="drugselect" data-placeholder="Click here to add your prescriptions">
-            </select>
-            <button class="addbutton">Add</button>
-          </form>
+            <form>
+              <select class="drugselect" data-placeholder="Click here to add your prescriptions">
+              </select>
+              <button class="addbutton">Add</button>
+            </form>
           </div>
         </div>
       </div>
@@ -135,27 +135,27 @@
   </div>
   <div id="symptomPanel">
     <nav class="symptom-tab">
-    <!-- Container for entire symptom list -->
-    <div class="container-fluid">
-      <div class="col-sm-5 pull left">
-        <div class="row">
-          graph in this area
-          <!-- This is the div where symptom graph data will display -->
+      <!-- Container for entire symptom list -->
+      <div class="container-fluid">
+        <div class="col-sm-5 pull left">
+          <div class="row">
+            graph in this area
+            <!-- This is the div where symptom graph data will display -->
+          </div>
         </div>
-      </div>
-      <!--Blank Button to input symptoms-->
-      <div class="col-sm-7 pull-right">
-<!--        <label for="symptom-list">List of Symptoms</label>
+        <!--Blank Button to input symptoms-->
+        <div class="col-sm-7 pull-right">
+          <!--        <label for="symptom-list">List of Symptoms</label>
           <form class="input-area">
             <input id="new-symptom-input" type="text" value="" placeholder="new symptom">
             <input id="add-symptom-button" value="Add symptom" type="submit">
           </form>
         <hr>
         <div id="reported-symptoms">
-        </div>   -->  
-        <div class="panel panel-default">
-          <!-- container for inputing symptom date, time, severity, duration, comments -->
-          <label for="panel-heading">List of Symptoms</div>
+        </div>   -->
+          <div class="panel panel-default">
+            <!-- container for inputing symptom date, time, severity, duration, comments -->
+            <label for="panel-heading">List of Symptoms</div>
           <table class="table table-bordered table-striped table-symptoms">
             <thead>
               <th>Symptom</th>
@@ -163,11 +163,11 @@
               <th>Intensity</th>
               <th>Remove</th>
             </thead>
-            <tbody>
+            <form>
               <tr>
                 <td>
-                  <form>
-                  <input id="add-symptom-button" value="add" type="submit"><input id="new-symptom-input" type="text" value="" placeholder="new symptom" required>
+                  <input id="add-symptom-button" value="add" type="submit">
+                  <input id="new-symptom-input" type="text" value="" placeholder="new symptom" required>
                 </td>
                 <td class="date-data">
                   <input id="new-symptom-date" type="date" value="" placeholder="" required>
@@ -183,14 +183,17 @@
                 </td>
                 <td class="remove-click">
                 </td>
-              </tr>
+                </tr>
+            </form>
+            <tbody id="symptomsDisplay">
+              
             </tbody>
             </form>
           </table>
-          </div>
         </div>
       </div>
-    </div>
+  </div>
+  </div>
   </nav>
   </div>
 </body>
