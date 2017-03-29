@@ -13,11 +13,21 @@ $(document).ready(function(){
 
 
 
-	$("#openclosebtn").on("click", function(){
+	$("#drugPanelBtn").on("click", function(){
 
 		$("#drugPanel").toggleClass("open");
 
 	});
+
+	$("#symptomPanelBtn").on("click", function(){
+
+		$("#symptomPanel").toggleClass("open");
+
+		
+
+	});
+
+	
 
 	
 
