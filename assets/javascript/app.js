@@ -3,7 +3,7 @@ $(document).ready(function() {
     var currentUser = {};
     var userSavedSymptomObject = {};
     var drugSelected = [];
-    var currentUserID = "0123456789";
+    var currentUserID = "0120";
     var currentUserImg = "http://i0.wp.com/radaronline.com/wp-content/uploads/2014/06/seth-rogan-james-franco.jpg?resize=236%2C169"
     var currentUserName = "James Franco"
         // firebas congfig and cached functions
@@ -25,36 +25,22 @@ $(document).ready(function() {
 
 
     var getUser = function(userID) {
-
-        // var user;
-
         database.ref('/users/' + userID).once('value').then(function(snapshot) {
-
             currentUser = snapshot.val();
-
             console.log(currentUser);
-
-            if (currentUser) {
+            if (!currentUser) {
+                writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+                location.reload(forceGet);
+            } else {
                 currentUserName = currentUser.username;
                 currentUserImg = currentUser.profile_picture;
-                if (currentUser.druglist) {
-                    drugSelected = JSON.parse(currentUser.drugList);
-                    renderDrugList(drugSelected);
-                } else {
-                    drugSelected = [];
-                    renderDrugList(drugSelected);
-                }
-                if (currentUser.symptomsList) {
-                    userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
-                } else {
-                    userSavedSymptomObject = {};
-                }
-            } else {
+                drugSelected = JSON.parse(currentUser.drugList);
+                userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
                 writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-                renderDrugList(drugSelected);
             }
         });
     };
+
 
     var delete_cookie = function(name) {
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -65,15 +51,12 @@ $(document).ready(function() {
         localStorage.removeItem('hello');
         delete_cookie('NID');
         document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.com/Med_Magnet/index.html";
-        location.reload();
+        location.reload(forceGet);
     };
-
 
     var signin = function() {
         hello('google').login();
     };
-
-
 
     // Hello init, contains browers secret
     hello.init({
@@ -83,7 +66,6 @@ $(document).ready(function() {
     });
 
     hello.on('auth.login', function(auth) {
-
         // Call user information, for the given network
         hello(auth.network).api('me').then(function(r) {
             console.log(r);
@@ -94,33 +76,19 @@ $(document).ready(function() {
                 label.id = 'profile_' + auth.network;
                 document.getElementById('profile').appendChild(label);
             }
-
-            userEtag = r.etag;
-
             label.innerHTML = '<img src="' + r.thumbnail + '" /> Hey ' + r.name;
             var googSession = hello('google').getAuthResponse()
-
             var googAccessToken = googSession.access_token
-
             var googExpires = googSession.expires
-
             console.log(googAccessToken);
             console.log(googExpires);
-
-
             currentUserID = r.id;
             currentUserImg = r.thumbnail;
             currentUserName = r.name;
-
-
             getuser(currentUserID);
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-
-
         });
     });
-
-
 
     // writes user data to firebase
     function writeUserData(userId, name, imageUrl, drugs, symptoms) {
@@ -142,7 +110,6 @@ $(document).ready(function() {
 
 
     var setDrugtoProfile = function(drugs) {
-
         writeUserData(currentUserID, currentUserName, currentUserImg, drugs, userSavedSymptomObject);
     }
 
@@ -200,16 +167,12 @@ $(document).ready(function() {
     database.ref('users/' + currentUserID + '/drugList').on("value", function(snapshot) {
         var drugList = JSON.parse(snapshot.val());
         renderDrugList(drugList);
-
     });
 
 
-    var renderDrugList = function(drugList) {
-
+    var renderDrugList = function(drugList) {      
         $(".table > #drugname").empty();
-
         for (var i = 0; i < drugList.length; i++) {
-
             // Append data to the DOM (data from firebase)
             $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">Delete</button></td>" + "</tr>");
         }
@@ -247,8 +210,9 @@ $(document).ready(function() {
         var toDelete = this.dataset.drug;
         var index = drugSelected.indexOf(toDelete);
 
+        console.log(toDelete, index)
         drugSelected.splice(index, 1);
-        renderDrugList();
+        renderDrugList(drugSelected);
         writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
 
     });
@@ -451,6 +415,37 @@ $(document).ready(function() {
 
     }
 
+
+    $('#drugPanelBtn').on('click', function() {
+        if ($('#symptomPanel').hasClass('open')) {
+            $('#symptomPanel').removeClass('open');
+        }
+
+
+        if ($('#drugPanel').hasClass('open')) {
+            $('#drugPanel').removeClass('open');
+        } else {
+            $('#drugPanel').addClass('open');
+        }
+
+
+    });
+
+    $('#symptomPanelBtn').on('click', function() {
+        if ($('#drugPanel').hasClass('open')) {
+            $('#drugPanel').removeClass('open');
+        }
+
+
+        if ($('#symptomPanel').hasClass('open')) {
+            $('#symptomPanel').removeClass('open');
+        } else {
+            $('#symptomPanel').addClass('open');
+        }
+
+
+
+    });
 
 
 
