@@ -126,109 +126,15 @@ body {
   background-color: #fff;
 }
 
-/*#drugPanel {
-  width: 80%;
-  margin-left: 0px;
-  margin-right: 0px;
-  padding-right: 0px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-left: -30px;
-  background-color: #ccc;
-  transfrom: translate3d(-90%, -40%, 0);
-  -webkit-transform: translate3d(-90%, -40%, 0);
-  top: 50%;
-  position: absolute;
-  transition: all 1s;
-  -webkit-transition: all 1s;
-  height: 400px;
-  z-index: 0;
-  border-color: black;
-  border-width: : 100px;
-  border-style: solid;
-  background-color: #ccc;
+
+#profileImg {
+  height: 50px;
+  width: 50px;
 }
-
-#drugPanel.open {
-  transfrom: translate3d(0%, -100%, 0);
-  -webkit-transform: translate3d(0%, -50%, 0);
-  height: 80%;
-  background: #ECEBEB;
-  z-index: 0;
-}
-
-#drugPanelBtn {
-  margin-top: 86px;
-  /*float: right;*/
-/*  margin-right: 74px;
-  padding-right: 0px;
-  z-index: 110;
-  position: relative;
-  transform: rotate(90deg);
-}*/
-
-/*#symptomPanel {
-  width: 10%;
-  margin-left: 0px;
-  padding-right: 0px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-left: 30px;
-  background-color: #F5F5DC;
-  transfrom: translate3d(100%, 90%, 0);
-  -webkit-transform: translate3d(90%, 0%, 0);
-  top: 20.5%;
-  position: absolute;
-  transition: all 1s;
-  -webkit-transition: all 1s;
-  height: 400px;
-  z-index: 0;
-  right: 10%;
-  border-color: black;
-  border-width: : 100px;
-  border-style: solid;
-}
-
-#symptomPanel.open {
-  transfrom: translate3d(0%, 0%, 0);
-  -webkit-transform: translate3d(0%, 0%, 0);
-  height: 78.4%;
-  background: #ECEBEB;
-  z-index: 0;
-  width: 80%;
-}
-
-#symcanvas {
-  /*margin-left: 100px;
-}
-
-#symptomPanelBtn {
-  margin-left: -20px;
-  margin-top: 86px;
-  float: left;
-  margin-right: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  z-index: 200;
-  position: relative;
-  transform: rotate(90deg);
-}
-*/
-
-/*body,
-html {
-  margin: 0;
-  padding: 0;
-}*/
 
 #drugCanvas {
     display:none;
-  /*  margin-top: 20px;
-    margin-left: 15px;
-    margin-bottom: 20px;
-    margin-right: 0px;
-    padding-right: 0px;
-    padding-left: 0px*/
+ 
 }
 
 #drugPanel {

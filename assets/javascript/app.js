@@ -3,9 +3,9 @@ $(document).ready(function() {
     var currentUser = {};
     var userSavedSymptomObject = {};
     var drugSelected = [];
-    var currentUserID = "0120";
-    var currentUserImg = "http://i0.wp.com/radaronline.com/wp-content/uploads/2014/06/seth-rogan-james-franco.jpg?resize=236%2C169"
-    var currentUserName = "James Franco"
+    var currentUserID;
+    var currentUserImg;
+    var currentUserName = "Sign in to load your data!"
         // firebas congfig and cached functions
     var config = {
         apiKey: "AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8",
@@ -24,20 +24,41 @@ $(document).ready(function() {
     var isSympPanelOpen = false;
 
 
+    if (localStorage.getItem('userLogon')) {
+        console.log('Current User Detected');
+        currentUserID = localStorage.getItem('userLogon');
+    } else {
+        currentUserID = "Default";
+    }
+
 
     var getUser = function(userID) {
         database.ref('/users/' + userID).once('value').then(function(snapshot) {
             currentUser = snapshot.val();
-            console.log(currentUser);
+            // console.log(currentUser);
             if (!currentUser) {
                 writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
                 location.reload(true);
+                $('#username').text('Hey ' + currentUserName + '! Thanks for joining MedMagnet!');
+                $('#profileImg').attr('src', currentUserImg);
             } else {
+                // console.log('Works');
                 currentUserName = currentUser.username;
                 currentUserImg = currentUser.profile_picture;
                 drugSelected = JSON.parse(currentUser.drugList);
                 userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
                 writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+                if (currentUserName === "") {
+                    $('#username').text('Welcome back ' + currentUserName + '!');
+                } else {
+                    $('#username').text(currentUserName);
+                }
+
+
+                if (currentUserImg) {
+                    $('#profileImg').attr('src', currentUserImg);
+                }
+                renderDrugList(drugSelected);
             }
         });
     };
@@ -50,12 +71,17 @@ $(document).ready(function() {
     var signout = function() {
         hello('google').logout()
         localStorage.removeItem('hello');
+        localStorage.removeItem('userLogon');
         delete_cookie('NID');
         document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.io/Med_Magnet/index.html";
     };
 
+
+
+
     var signin = function() {
         hello('google').login();
+
     };
 
     // Hello init, contains browers secret
@@ -70,23 +96,21 @@ $(document).ready(function() {
         hello(auth.network).api('me').then(function(r) {
 
             // Inject it into the container
-            var label = document.getElementById("profile");
-            if (!label) {
-                label = document.createElement('div');
-                label.id = 'profile_' + auth.network;
-                document.getElementById('profile').appendChild(label);
-            }
-            label.innerHTML = '<img src="' + r.thumbnail + '" /> Hey ' + r.name;
             var googSession = hello('google').getAuthResponse()
             var googAccessToken = googSession.access_token
             var googExpires = googSession.expires
-            console.log(googAccessToken);
-            console.log(googExpires);
             currentUserID = r.id;
             currentUserImg = r.thumbnail;
             currentUserName = r.name;
+            $('#username').text('Welcome back ' + currentUserName + '!');
+            $('#profileImg').attr('src', currentUserImg);
+            $('#signOut').removeClass('hidden');
+
+            console.log(currentUserID);
+            localStorage.setItem('userLogon', currentUserID);
             getuser(currentUserID);
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+
         });
     });
 
@@ -98,13 +122,14 @@ $(document).ready(function() {
             drugList: JSON.stringify(drugs),
             symptomsList: JSON.stringify(symptoms)
         });
+        localStorage.setItem('userLogon', userId);
     }
 
-    $('#signin').on('click', function() {
+    $('#signIn').on('click', function() {
         signin();
     })
 
-    $('#signout').on('click', function() {
+    $('#signOut').on('click', function() {
         signout();
     })
 
@@ -114,7 +139,7 @@ $(document).ready(function() {
     }
 
 
-    getUser(currentUserID);
+
 
 
 
@@ -158,7 +183,7 @@ $(document).ready(function() {
 
         drugSelected.push($(".drugselect").val());
 
-        console.log("array: " + drugSelected)
+        // console.log("array: " + drugSelected)
 
         setDrugtoProfile(drugSelected);
     });
@@ -210,7 +235,7 @@ $(document).ready(function() {
         var toDelete = this.dataset.drug;
         var index = drugSelected.indexOf(toDelete);
 
-        console.log(toDelete, index)
+        // console.log(toDelete, index)
         drugSelected.splice(index, 1);
         renderDrugList(drugSelected);
         writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
@@ -337,7 +362,7 @@ $(document).ready(function() {
                 // symptom is tagged with item-symptom name
                 symptomContainer.attr("id", "item-" + symptom);
 
-                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + "></td>";
+                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + " value='x'></td>";
 
                 symptomContainer.append(symptomListTr);
 
@@ -429,7 +454,7 @@ $(document).ready(function() {
 
 
     $('#clickLeft').on('click', function() {
-        
+
         if (!isDrugPanelOpen) {
             $('#drugCanvas').fadeIn('slow', function() {});
         } else {
@@ -457,8 +482,8 @@ $(document).ready(function() {
     $('#clickRight').on('click', function() {
 
         if (!isSympPanelOpen) {
-            setTimeout(function(){
-             $('#symptomCanvas').fadeIn('slow', function() {});
+            setTimeout(function() {
+                $('#symptomCanvas').fadeIn('slow', function() {});
             }, 1500)
         } else {
             $('#symptomCanvas').fadeOut('fast', function() {});
@@ -488,6 +513,7 @@ $(document).ready(function() {
 
 
 
+    getUser(currentUserID);
 
 
 
