@@ -420,7 +420,7 @@ $(document).ready(function() {
     }
 
 
-    $('#drugPanelBtn').on('click', function() {
+    $('#clickLeft').on('click', function() {
         if ($('#symptomPanel').hasClass('open')) {
             $('#symptomPanel').removeClass('open');
         }
