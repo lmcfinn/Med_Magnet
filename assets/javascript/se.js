@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 
 
-	$("#drugPanelBtn").on("click", function(){
+	$("#drugClick").on("click", function(){
 
 		$("#drugPanel").toggleClass("open");
 

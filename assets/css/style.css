@@ -230,6 +230,24 @@ body {
 
 }
 
+#drugClick {
+
+    content:"";
+    position: absolute;
+    color:#ccc;
+    background-color:#000;
+    right:0;
+    top:0;
+    height:100%;
+    width: 50px;
+}
+
+#drugClickCopy {
+    transform: rotate(90deg);
+    font-size: 10px;
+    color: white;
+}
+
 
 
 
