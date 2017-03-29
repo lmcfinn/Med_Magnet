@@ -6,26 +6,21 @@
   <!-- bootstrap scaling -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
   <!-- jQuery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-
   <!-- Chosen plugin css -->
   <link rel="stylesheet" type="text/css" href="assets/css/chosen.min.css">
-   <!-- Chosen plugin js -->
+  <!-- Chosen plugin js -->
   <script type="text/javascript" src="assets/javascript/chosen.jquery.min.js"></script>
- 
   <!-- Firebase js -->
   <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
   <!-- hello.js library -->
   <script type="text/javascript" src="assets/javascript/hello.js"></script>
-  
   <!-- Load c3.css -->
   <link href="./assets/c3/c3.min.css" rel="stylesheet" type="text/css">
   <!-- Load d3.js and c3.js -->
-  <script src="./assets/c3/d3.min.js" charset="utf-8" ></script>
-  <script src="./assets/c3/c3.min.js" ></script>
-
+  <script src="./assets/c3/d3.min.js" charset="utf-8"></script>
+  <script src="./assets/c3/c3.min.js"></script>
   <!-- local js -->
   <script type="text/javascript" src="assets/javascript/app.js"></script>
   <!-- local css -->
@@ -42,7 +37,6 @@
         <div id="username" class="col-sm-2 text-right"></div>
         <div id="profile" class="col-sm-1 pull-right">
           <button class="btn btn-primary" id="signIn">
-            
             <img id="profileImg" src="assets/images/head.png" alt="Google Sign On" title="Google Sign On">
           </button>
           <button class="btn btn-danger hidden" id="signOut">Google Logout</button>
@@ -50,12 +44,9 @@
       </div>
     </div>
     <div class="row">
-      <nav class="navbar navbar-inverse cover">
-      </nav>
       <div class="col-sm-10 col-sm-offset-1" id='about'>
         <h2>Welcome to Med Magnet</h2>
         <p>Use Med Magnet to track your drugs, and research their known side-effects. Likewise, use the symptom diary to compare those drug side-effects against your own personal symptom history.</p>
-        
         <iframe src="" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
       </div>
     </div>
@@ -120,13 +111,15 @@
       </div>
       <div class="col-xs-1 visible pull-right">
         <div id='clickLeft'>
-          <img id='drugLogo' src="assets/images/pill.png"><h2 id="drugBtn">Drugs</h2>
+          <img id='drugLogo' src="assets/images/pill.png">
+          <h2 id="drugBtn">Drugs</h2>
         </div>
       </div>
     </div>
     <div id="symptomPanel">
       <div id='clickRight'>
-        <img id='symptomLogo' src="assets/images/hospital.png"><h2 id='symptomBtn'>Symptoms</h2>
+        <img id='symptomLogo' src="assets/images/hospital.png">
+        <h2 id='symptomBtn'>Symptoms</h2>
       </div>
       <div class="col-sm-1 visible pull-left">
       </div>
