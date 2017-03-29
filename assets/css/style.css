@@ -1,9 +1,5 @@
-/*--Website Size--*/
-
-
-
-
-/*--LOGO--*/
+/*Google Font*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .h1,
 h1 {
@@ -120,10 +116,11 @@ li {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   background-color: #fff;
+  margin-top: 10px;
 }
 
 
