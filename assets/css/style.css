@@ -160,8 +160,8 @@ body {
 }
 
 #drugPanel.open {
-  transfrom: translate3d(0%, -55%, 0);
-  -webkit-transform: translate3d(0%, -55%, 0);
+  transfrom: translate3d(10%, -55%, 0);
+  -webkit-transform: translate3d(10%, -55%, 0);
     width: 70%;
     z-index: 100;
     background-color: #f2f2f2;
@@ -199,7 +199,7 @@ body {
   top: 500px;
   position: absolute;
   transition: all 1s;
-  -webkit-transition: all 2s;
+  -webkit-transition: all 1.5s;
   height: 600px;
   padding-left: 0;
   background: #f2f2f2;
@@ -207,8 +207,8 @@ body {
 }
 
 #symptomPanel.open {
-  transfrom: translate3d(0%, -55%, 0);
-  -webkit-transform: translate3d(0%, -55%, 0);
+  transfrom: translate3d(-10%, -55%, 0);
+  -webkit-transform: translate3d(-10%, -55%, 0);
     width: 70%;
     z-index: 100;
     background-color: #f2f2f2;

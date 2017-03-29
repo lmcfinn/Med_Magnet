@@ -23,8 +23,10 @@ $(document).ready(function() {
     var isDrugPanelOpen = false;
     var isSympPanelOpen = false;
 
+    var googleMapsKey = 'AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8';
+
     getGeoTags();
-    
+
     if (localStorage.getItem('userLogon')) {
         console.log('Current User Detected');
         currentUserID = localStorage.getItem('userLogon');
@@ -117,15 +119,17 @@ $(document).ready(function() {
 
     // writes user data to firebase
     var writeUserData = function(userId, name, imageUrl, drugs, symptoms) {
-        firebase.database().ref('users/' + userId).update({
-            username: name,
-            profile_picture: imageUrl,
-            drugList: JSON.stringify(drugs),
-            symptomsList: JSON.stringify(symptoms)
-        });
-        localStorage.setItem('userLogon', userId);
-    }
+        if (userId !== 'Default') {
 
+            firebase.database().ref('users/' + userId).update({
+                username: name,
+                profile_picture: imageUrl,
+                drugList: JSON.stringify(drugs),
+                symptomsList: JSON.stringify(symptoms)
+            });
+            localStorage.setItem('userLogon', userId);
+        }
+    }
     $('#signIn').on('click', function() {
         signin();
     })
@@ -344,25 +348,25 @@ $(document).ready(function() {
     }
 
 
-    function makePieChart(){
-        var columnData= [];
+    function makePieChart() {
+        var columnData = [];
 
-        for(var symptomKey in userSavedSymptomObject){
+        for (var symptomKey in userSavedSymptomObject) {
             var currentSymptomArray = [symptomKey];
-            currentSymptomArray.push( userSavedSymptomObject[symptomKey].length );
+            currentSymptomArray.push(userSavedSymptomObject[symptomKey].length);
 
             columnData.push(currentSymptomArray);
         }
-      console.log(columnData);
+        console.log(columnData);
 
         var chart = c3.generate({
             bindto: '#pieChart',
             data: {
                 columns: columnData,
-                type : 'pie',
+                type: 'pie',
             }
         });
-    }//end of makeGaugeData()
+    } //end of makePieChart()
 
 
 
@@ -504,7 +508,7 @@ $(document).ready(function() {
 
         if (!isSympPanelOpen) {
             setTimeout(function() {
-                $('#symptomCanvas').fadeIn('slow', function() {makePieChart();});
+                $('#symptomCanvas').fadeIn('slow', function() { makePieChart(); });
             }, 1500)
         } else {
             $('#symptomCanvas').fadeOut('fast', function() {});
@@ -550,19 +554,17 @@ $(document).ready(function() {
         // Set the drop down bar width
         width: "40%"
     });
-    
+
     //for embedding google maps with nearby pharmacies
-    function getGeoTags(){
+    function getGeoTags() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position){
-                $('iframe').attr('src',
-                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d'+ position.coords.latitude +'!2d'+ position.coords.longitude +'!3d41.90519472495046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490797055209'
-                    );
+            navigator.geolocation.getCurrentPosition(function(position) {
+                $('iframe').attr('src', 'https://www.google.com/maps/embed/v1/search?key=' + googleMapsKey +'&q=Pharmacy&center=' + position.coords.latitude + ',' + position.coords.longitude + "&zoom=15");
             });
-        } else { 
+        } else {
             $('iframe').attr('src',
-                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11877.71094677172!2d-87.62855171696631!3d41.905162785034655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490798248002'
-                    );
+                'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11877.71094677172!2d-87.62855171696631!3d41.905162785034655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490798248002'
+            );
         }
     }
 
