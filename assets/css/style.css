@@ -231,14 +231,13 @@ html {
   position: absolute;
   transition: all 1s;
   -webkit-transition: all 1s;
-  height: 100px;
+  height: 400px;
 }
 
 #drugPanel.open {
   transfrom: translate3d(0%, -50%, 0);
   -webkit-transform: translate3d(0%, -50%, 0);
-  height: 300px;
-  background: red;
+  
 }
 
 #clickLeft {

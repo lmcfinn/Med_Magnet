@@ -67,7 +67,7 @@ $(document).ready(function() {
     hello.on('auth.login', function(auth) {
         // Call user information, for the given network
         hello(auth.network).api('me').then(function(r) {
-            
+
             // Inject it into the container
             var label = document.getElementById("profile");
             if (!label) {
@@ -169,7 +169,7 @@ $(document).ready(function() {
     });
 
 
-    var renderDrugList = function(drugList) {     
+    var renderDrugList = function(drugList) {
         $(".table > #drugname").empty();
         for (var i = 0; i < drugList.length; i++) {
             // Append data to the DOM (data from firebase)
@@ -323,7 +323,7 @@ $(document).ready(function() {
     database.ref('users/' + currentUserID + '/symptomsList').on("value", function(snapshot) {
         var symptomList = JSON.parse(snapshot.val());
 
-        $("#symptomsDisplay").empty();
+        $("#symptomTable").empty();
 
         for (symptom in symptomList) {
 
@@ -341,7 +341,7 @@ $(document).ready(function() {
                 symptomContainer.append(symptomListTr);
 
                 // attach new symptom data to table
-                $("#symptomsDisplay").append(symptomContainer);
+                $("#symptomTable").append(symptomContainer);
 
                 $("#new-symptom-input").val('');
                 $("#new-symptom-date").val('');
@@ -359,27 +359,30 @@ $(document).ready(function() {
 
     $("#add-symptom-button").on("click", function runSymptom(event) {
         event.preventDefault();
-
+        
 
 
         var userSymptomInput = $("#new-symptom-input").val().trim();
         var userDateInput = $("#new-symptom-date").val();
         var userIntensityInput = $("#intensity option:selected").text();
 
+        
 
-        if (userSavedSymptomObject[userSymptomInput] === undefined) {
-            userSavedSymptomObject[userSymptomInput] = [];
+        if (userSymptomInput.length > 0 && userDateInput && userIntensityInput.length === 1) {
+            
+            if (userSavedSymptomObject[userSymptomInput] === undefined) {
+                userSavedSymptomObject[userSymptomInput] = [];
+            }
+
+            userSavedSymptomObject[userSymptomInput].push({
+                date: $("#new-symptom-date").val(),
+                intensity: $("#intensity option:selected").text()
+            });
+
+            
+
+            writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
         }
-
-        userSavedSymptomObject[userSymptomInput].push({
-            date: $("#new-symptom-date").val(),
-            intensity: $("#intensity option:selected").text()
-        });
-
-        console.log(userSavedSymptomObject);
-
-        writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-
         // create new row for new symptom
 
 
