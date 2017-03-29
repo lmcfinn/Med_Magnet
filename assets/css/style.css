@@ -1,271 +1,248 @@
-/*--Website Size--*/
-
-
-/*--LOGO--*/
+/*Google Font*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .h1,
 h1 {
-    font-size: 36px;
-    color: #d9534f;
-    margin: 2%;
+  font-size: 36px;
+  color: #d9534f;
+  margin: 2%;
 }
 
 .h1,
 .h2,
 .h3,
 .h4 {
-    font-weight: 500;
-    line-height: 1.1;
+  font-weight: 500;
+  line-height: 1.1;
 }
 
+.containerIntro {
+  width: 100%;
+}
 
 /*--Nav Bar--*/
 
 .navbar-inverse {
-    background-image: linear-gradient(to bottom, #3c3c3c 0, #222 100%);
-    background-repeat: repeat-x;
-    border-radius: 4px;
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
+  background-image: linear-gradient(to bottom, #3c3c3c 0, #222 100%);
+  background-repeat: repeat-x;
+  border-radius: 4px;
+  position: relative;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
 }
 
 .navbar {
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
+  position: relative;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
 }
 
 .navbar-inverse .navbar-brand:hover {
-    color: #fff;
-    background-color: transparent;
+  color: #fff;
+  background-color: transparent;
 }
 
 .navbar-brand {
-    float: left;
-    height: 50px;
-    padding: 15px 15px;
-    font-size: 18px;
-    line-height: 20px;
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
 }
 
 a:-webkit-any-link {
-    cursor: auto;
+  cursor: auto;
 }
 
 .navbar-inverse .navbar-brand,
 .navbar-inverse .navbar-nav>li>a {
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
 }
 
 .navbar-inverse .navbar-brand {
-    color: #9d9d9d;
+  color: #9d9d9d;
 }
 
 
 /*--Body--*/
 
 a.absolute {
-    position: absolute;
-    display: block;
-    margin-top left: 0;
-    top: 0;
+  position: absolute;
+  display: block;
+  margin-top left: 0;
+  top: 0;
 }
 
 
 /*--Red Pill--*/
 
 ul.first-r {
-    left: 0%;
-    position: relative;
+  left: 0%;
+  position: relative;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .pager .next>a,
 .pager .next>span {
-    float: right;
-    color: red;
+  float: right;
+  color: red;
 }
 
 .pager li>a,
 .pager li>span {
-    display: inline-block;
-    padding: 5px 14px;
-    background-color: #fff;
-    border: 1px solid gray;
-    border-radius: 15px;
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid gray;
+  border-radius: 15px;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 a:-webkit-any-link {
-    cursor: auto;
+  cursor: auto;
 }
 
 li {
-    text-align: -webkit-match-parent;
+  text-align: -webkit-match-parent;
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    background-color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  margin-top: 10px;
 }
 
 
-
-
-#drugPanel{
-
-        width:80%;
-        margin-left: 0px;
-        margin-right: 0px;
-        padding-right:0px;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        padding-left: -30px;
-        background-color: #ccc;
-        transfrom: translate3d(-90%, -40%, 0);
-        -webkit-transform: translate3d(-90%, -40%, 0);
-        top:50%;
-        position: absolute;
-        transition:all 1s;
-        -webkit-transition:all 1s;
-        height:400px;
-        z-index: 0;
-        border-color: black;
-        border-width: : 100px;
-        border-style: solid;
-        background-color: #ccc;
-
-
+#profileImg {
+  height: 50px;
+  width: 50px;
 }
 
-#drugPanel.open{
-    transfrom: translate3d(0%, -100%, 0);
-    -webkit-transform: translate3d(0%, -50%, 0);
-    height:80%;
-    background:#ECEBEB;
-    z-index: 0;
-
+#profile {
+  padding: 0;
 }
 
-#drugPanelBtn {
-
- 
-    margin-top: 86px;
-    /*float: right;*/
-    margin-right: 74px;
-    padding-right: 0px;
-    z-index: 110;
-    position: relative;
-    transform: rotate(90deg);
-
-}
-
-#symptomPanel {
-    width: 10%;
-    margin-left: 0px;
-    padding-right:0px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    padding-left: 30px;
-    background-color: #F5F5DC;
-    transfrom: translate3d(100%, 90%, 0);
-    -webkit-transform: translate3d(90%, 0%, 0);
-    top:20.5%;
-    position: absolute;
-    transition:all 1s;
-    -webkit-transition:all 1s;
-    height:400px;
-    z-index: 0;
-    right: 10%;
-    border-color: black;
-    border-width: : 100px;
-    border-style: solid;
-
-}
-
-#symptomPanel.open{
-    transfrom: translate3d(0%, 0%, 0);
-    -webkit-transform: translate3d(0%, 0%, 0);
-    height:78.4%;
-    background:#ECEBEB;
-    z-index: 0;
-    width: 80%;
-
-}
-
-#symcanvas {
-
-    /*margin-left: 100px;*/
-
+#drugCanvas {
+    display:none;
  
 }
 
-#symptomPanelBtn {
+#about{
+  color: #404040;
+}
 
+#drugPanel {
+  width: 50%;  
+  transfrom: translate3d(-100%, -55%, 0);
+  -webkit-transform: translate3d(-100%, -55%, 0);
+  top: 500px;
+  position: absolute;
+  transition: all 1s;
+  -webkit-transition: all 1.5s;
+  height: 600px;
+  padding-right: 0;
+  background: #f2f2f2;
+  left: 50px;
+}
 
-    margin-left: -20px;
-    margin-top: 86px;
-    float: left;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    z-index: 200;
-    position: relative;
-    transform: rotate(90deg);
-
+#drugPanel.open {
+  transfrom: translate3d(0%, -55%, 0);
+  -webkit-transform: translate3d(0%, -55%, 0);
+    width: 70%;
+    z-index: 100;
+    background-color: #f2f2f2;
+    box-shadow: 0px 0px 8px 0px rgba(82,82,82,0.39);
 }
 
 #clickLeft {
-
-    content:"";
-    position: absolute;
-    color:#ccc;
-    background-color:#000;
-    right:0;
-    top:0;
-    height:100%;
-    width: 50px;
+  content: "";
+  position: absolute;
+  color: #000;
+  background-color: #E96359;
+  right: 0;
+  top: 0;
+  height: 600px;
+  width: 50px;
 }
 
-#clickLeftText {
+#drugBtn {
+  transform: rotate(90deg);
+}
+
+#symptomBtn{
     transform: rotate(90deg);
-    font-size: 10px;
-    color: white;
+}
+#symptomCanvas {
+    display:none;
+}
+
+#symptomPanel {
+  width: 0%;
+  padding: 20px;
+  
+  transfrom: translate3d(5%, -55%, 0);
+  -webkit-transform: translate3d(5%, -55%, 0);
+  top: 500px;
+  position: absolute;
+  transition: all 1s;
+  -webkit-transition: all 2s;
+  height: 600px;
+  padding-left: 0;
+  background: #f2f2f2;
+  right: 31px;
+}
+
+#symptomPanel.open {
+  transfrom: translate3d(0%, -55%, 0);
+  -webkit-transform: translate3d(0%, -55%, 0);
+    width: 70%;
+    z-index: 100;
+    background-color: #f2f2f2;
+    box-shadow: 0px 0px 8px 0px rgba(82,82,82,0.39);
 }
 
 
 
-
-/*
-#toplevel {
-
-     padding-top: 0px;
-    padding-left: 10px;
-    padding-bottom: 0px;
-    padding-right: 0px;
-    background-color: #ecebeb;
-    position: relative;
-
-    z-index:;
-
+#clickRight {
+  content: "";
+  position: absolute;
+  color: #000;
+  background-color: #3B97D3;
+  left: 0;
+  top: 0;
+  height: 600px;
+  width: 50px;
 }
-*/
 
+#SymptomPanel ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#symptomLogo, #drugLogo{
+  margin-left: 10px;
+  margin-top: 20px;
+}
+.push {
+    height: 75px;
+}
 
-
-
+.footer{
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+}

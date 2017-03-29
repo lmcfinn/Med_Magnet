@@ -3,9 +3,9 @@ $(document).ready(function() {
     var currentUser = {};
     var userSavedSymptomObject = {};
     var drugSelected = [];
-    var currentUserID = "0120";
-    var currentUserImg = "http://i0.wp.com/radaronline.com/wp-content/uploads/2014/06/seth-rogan-james-franco.jpg?resize=236%2C169"
-    var currentUserName = "James Franco"
+    var currentUserID;
+    var currentUserImg;
+    var currentUserName = "Sign in to load your data!"
         // firebas congfig and cached functions
     var config = {
         apiKey: "AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8",
@@ -20,23 +20,46 @@ $(document).ready(function() {
     var databaseRef = database.ref();
     var userList = database.ref('users/');
 
+    var isDrugPanelOpen = false;
+    var isSympPanelOpen = false;
 
-
+    getGeoTags();
+    
+    if (localStorage.getItem('userLogon')) {
+        console.log('Current User Detected');
+        currentUserID = localStorage.getItem('userLogon');
+    } else {
+        currentUserID = "Default";
+    }
 
 
     var getUser = function(userID) {
         database.ref('/users/' + userID).once('value').then(function(snapshot) {
             currentUser = snapshot.val();
-            console.log(currentUser);
+            // console.log(currentUser);
             if (!currentUser) {
                 writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
                 location.reload(true);
+                $('#username').text('Hey ' + currentUserName + '! Thanks for joining MedMagnet!');
+                $('#profileImg').attr('src', currentUserImg);
             } else {
+                // console.log('Works');
                 currentUserName = currentUser.username;
                 currentUserImg = currentUser.profile_picture;
                 drugSelected = JSON.parse(currentUser.drugList);
                 userSavedSymptomObject = JSON.parse(currentUser.symptomsList);
                 writeUserData(userID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+                if (currentUserName === "") {
+                    $('#username').text('Welcome back ' + currentUserName + '!');
+                } else {
+                    $('#username').text(currentUserName);
+                }
+
+
+                if (currentUserImg) {
+                    $('#profileImg').attr('src', currentUserImg);
+                }
+                renderDrugList(drugSelected);
             }
         });
     };
@@ -49,12 +72,17 @@ $(document).ready(function() {
     var signout = function() {
         hello('google').logout()
         localStorage.removeItem('hello');
+        localStorage.removeItem('userLogon');
         delete_cookie('NID');
         document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.io/Med_Magnet/index.html";
     };
 
+
+
+
     var signin = function() {
         hello('google').login();
+
     };
 
     // Hello init, contains browers secret
@@ -67,25 +95,23 @@ $(document).ready(function() {
     hello.on('auth.login', function(auth) {
         // Call user information, for the given network
         hello(auth.network).api('me').then(function(r) {
-            
+
             // Inject it into the container
-            var label = document.getElementById("profile");
-            if (!label) {
-                label = document.createElement('div');
-                label.id = 'profile_' + auth.network;
-                document.getElementById('profile').appendChild(label);
-            }
-            label.innerHTML = '<img src="' + r.thumbnail + '" /> Hey ' + r.name;
             var googSession = hello('google').getAuthResponse()
             var googAccessToken = googSession.access_token
             var googExpires = googSession.expires
-            console.log(googAccessToken);
-            console.log(googExpires);
             currentUserID = r.id;
             currentUserImg = r.thumbnail;
             currentUserName = r.name;
+            $('#username').text('Welcome back ' + currentUserName + '!');
+            $('#profileImg').attr('src', currentUserImg);
+            $('#signOut').removeClass('hidden');
+
+            console.log(currentUserID);
+            localStorage.setItem('userLogon', currentUserID);
             getuser(currentUserID);
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
+
         });
     });
 
@@ -97,13 +123,14 @@ $(document).ready(function() {
             drugList: JSON.stringify(drugs),
             symptomsList: JSON.stringify(symptoms)
         });
+        localStorage.setItem('userLogon', userId);
     }
 
-    $('#signin').on('click', function() {
+    $('#signIn').on('click', function() {
         signin();
     })
 
-    $('#signout').on('click', function() {
+    $('#signOut').on('click', function() {
         signout();
     })
 
@@ -113,7 +140,7 @@ $(document).ready(function() {
     }
 
 
-    getUser(currentUserID);
+
 
 
 
@@ -157,7 +184,7 @@ $(document).ready(function() {
 
         drugSelected.push($(".drugselect").val());
 
-        console.log("array: " + drugSelected)
+        // console.log("array: " + drugSelected)
 
         setDrugtoProfile(drugSelected);
     });
@@ -169,11 +196,11 @@ $(document).ready(function() {
     });
 
 
-    var renderDrugList = function(drugList) {     
+    var renderDrugList = function(drugList) {
         $(".table > #drugname").empty();
         for (var i = 0; i < drugList.length; i++) {
             // Append data to the DOM (data from firebase)
-            $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td><button class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">Delete</button></td>" + "</tr>");
+            $(".table > #drugname").append("<tr><td class='drugadded btn btn-primary btn-sm'>" + drugList[i] + "</td>" + "<td class='deletebtn btn btn-danger btn-xs' data-drug=" + drugList[i] + ">x</td>" + "</tr>");
         }
     }
 
@@ -209,7 +236,7 @@ $(document).ready(function() {
         var toDelete = this.dataset.drug;
         var index = drugSelected.indexOf(toDelete);
 
-        console.log(toDelete, index)
+        // console.log(toDelete, index)
         drugSelected.splice(index, 1);
         renderDrugList(drugSelected);
         writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
@@ -317,13 +344,32 @@ $(document).ready(function() {
     }
 
 
+    function makePieChart(){
+        var columnData= [];
+
+        for(var symptomKey in userSavedSymptomObject){
+            var currentSymptomArray = [symptomKey];
+            currentSymptomArray.push( userSavedSymptomObject[symptomKey].length );
+
+            columnData.push(currentSymptomArray);
+        }
+      console.log(columnData);
+
+        var chart = c3.generate({
+            bindto: '#pieChart',
+            data: {
+                columns: columnData,
+                type : 'pie',
+            }
+        });
+    }//end of makeGaugeData()
 
 
 
     database.ref('users/' + currentUserID + '/symptomsList').on("value", function(snapshot) {
         var symptomList = JSON.parse(snapshot.val());
 
-        $("#symptomsDisplay").empty();
+        $("#symptomTable").empty();
 
         for (symptom in symptomList) {
 
@@ -336,12 +382,12 @@ $(document).ready(function() {
                 // symptom is tagged with item-symptom name
                 symptomContainer.attr("id", "item-" + symptom);
 
-                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + "></td>";
+                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + " value='x'></td>";
 
                 symptomContainer.append(symptomListTr);
 
                 // attach new symptom data to table
-                $("#symptomsDisplay").append(symptomContainer);
+                $("#symptomTable").append(symptomContainer);
 
                 $("#new-symptom-input").val('');
                 $("#new-symptom-date").val('');
@@ -362,28 +408,35 @@ $(document).ready(function() {
 
 
 
-        var userSymptomInput = $("#new-symptom-input").val().trim();
+        var userSymptomInput = $(".new-symptom-input").val();
         var userDateInput = $("#new-symptom-date").val();
         var userIntensityInput = $("#intensity option:selected").text();
 
 
-        if (userSavedSymptomObject[userSymptomInput] === undefined) {
-            userSavedSymptomObject[userSymptomInput] = [];
+        console.log(userSymptomInput + userDateInput + userIntensityInput);
+
+        if (userSymptomInput && userDateInput && userIntensityInput) {
+
+            if (userSavedSymptomObject[userSymptomInput] === undefined) {
+                userSavedSymptomObject[userSymptomInput] = [];
+            }
+
+            userSavedSymptomObject[userSymptomInput].push({
+                date: $("#new-symptom-date").val(),
+                intensity: $("#intensity option:selected").text()
+            });
+
+
+
+            writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
         }
-
-        userSavedSymptomObject[userSymptomInput].push({
-            date: $("#new-symptom-date").val(),
-            intensity: $("#intensity option:selected").text()
-        });
-
-        console.log(userSavedSymptomObject);
-
-        writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-
         // create new row for new symptom
 
-
+        makePieChart();
     });
+
+
+
 
 
 
@@ -393,7 +446,7 @@ $(document).ready(function() {
         var tableIndex = this.dataset.indexNumber;
         var tableSymptom = this.dataset.symptom;
         removeTR(tableSymptom, tableIndex);
-
+        makePieChart();
     });
 
 
@@ -406,10 +459,10 @@ $(document).ready(function() {
             userSavedSymptomObject[symptom].splice(index, 1);
             console.log(userSavedSymptomObject[symptom].length);
         }
-        console.log(typeof(index))
+
 
         if (typeof(index) === 'undefined' || userSavedSymptomObject[symptom].length === 0) {
-            console.log("DELETE");
+
             delete userSavedSymptomObject[symptom];
         }
 
@@ -419,39 +472,98 @@ $(document).ready(function() {
         console.log("HELP");
     }
 
-
+    //Drug Panel Fade in - Fade Out
     $('#clickLeft').on('click', function() {
-        if ($('#symptomPanel').hasClass('open')) {
-            $('#symptomPanel').removeClass('open');
+
+        if (!isDrugPanelOpen) {
+            $('#drugCanvas').fadeIn('slow', function() {});
+        } else {
+            $('#drugCanvas').fadeOut('slow', function() {});
         }
 
+        if (isSympPanelOpen) {
+            $('#symptomCanvas').fadeOut('fast', function() {});
+        }
+
+        if ($('#symptomPanel').hasClass('open')) {
+            $('#symptomPanel').removeClass('open');
+            isSympPanelOpen = false;
+        }
 
         if ($('#drugPanel').hasClass('open')) {
             $('#drugPanel').removeClass('open');
+            isDrugPanelOpen = false;
         } else {
             $('#drugPanel').addClass('open');
+            isDrugPanelOpen = true;
+        }
+    });
+
+    //Symptom Panel Fade in - Fade Out
+    $('#clickRight').on('click', function() {
+
+        if (!isSympPanelOpen) {
+            setTimeout(function() {
+                $('#symptomCanvas').fadeIn('slow', function() {makePieChart();});
+            }, 1500)
+        } else {
+            $('#symptomCanvas').fadeOut('fast', function() {});
+        }
+
+        if (isDrugPanelOpen) {
+            $('#drugCanvas').fadeOut('slow', function() {});
         }
 
 
-    });
-
-    $('#symptomPanelBtn').on('click', function() {
         if ($('#drugPanel').hasClass('open')) {
             $('#drugPanel').removeClass('open');
+            isDrugPanelOpen = false;
         }
 
 
         if ($('#symptomPanel').hasClass('open')) {
             $('#symptomPanel').removeClass('open');
+            isSympPanelOpen = false;
         } else {
             $('#symptomPanel').addClass('open');
+            isSympPanelOpen = true;
         }
-
-
-
     });
 
 
 
+    getUser(currentUserID);
+
+
+
+
+
+    var symptomSelectionArray = [' ', 'cachexia', 'loss of appetite', 'weight loss', 'weight gain', 'dry mouth', 'fatigue', 'malaise', 'asthenia', 'muscle weakness', 'pyrexia', 'jaundice', 'pain', 'abdominal pain', 'back pain', 'arm pain', 'leg pain', 'chest pain', 'neck pain', 'finger pain', 'foot pain', 'mouth pain', 'knee pain', 'hip pain', 'joint pain', 'bruising', 'epistaxis', 'tremor', 'convulsions', 'muscle cramps', 'amaurosis fugax', 'blurred vision', 'Dalrymples sign', 'double vision', 'exophthalmos', 'mydriasis', 'miosis', 'nystagmus', 'eye pain', 'red eye', 'blindness', 'loss of vision', 'anorexia', 'bloating', 'belching', 'blood in stool', 'melena', 'hematochezia', 'constipation', 'diarrhea', 'loose stool', 'dysphagia', 'dyspepsia', 'flatulence', 'gas', 'fecal incontinence', 'haematemesis', 'blood in vomit', 'nausea', 'odynophagia', 'sore throat', 'tinnitus', 'ear pain', 'dizziness', 'vertigo', 'proctalgia fugax', 'rectal pain', 'anal itching', 'syncope', 'pyrosis', 'fainting', 'passing out', 'hypothermia', 'rectal malodor', 'foul smelling stool', 'hypothermia', 'hyperthermia', 'steatorrhea', 'discharge', 'vomiting', 'rectal discharge', 'penile discharge', 'mucous', 'bleeding', 'rectal bleeding', 'swelling', 'swelling', 'deformity', 'claudication', 'sweats', 'night sweats', 'palpitation', 'heart flutter', 'chills', 'shivering', 'tachycardia', 'fast heartrate', 'bradycardia', 'slow heartrate', 'arrhythmia', 'irregular heartbeat', 'irregular heartrate', 'acalculia', 'acrophobia', 'agnosia', 'dysuria', 'difficulty urinating', 'hematuria', 'blood in urine', 'agoraphobia', 'impotence', 'akathisia', 'polyuria', 'alexia', 'urinary frequency', 'retrograde ejaculation', 'anhedonia', 'urinary incontinence', 'urine retention', 'anxiety', 'hypoventilation', 'apraxia', 'hypoventilation', 'hyperventilation', 'arachnophobia', 'ataxia', 'bradypnea', 'bradykinesia', 'slow movment', 'slow breathing', 'difficulty breathing', 'apnea', 'stopped breathing', 'cough', 'cataplexy', 'fear', 'chorea', 'dyspnea', 'irregular breathing', 'claustrophobia', 'hemoptysis', 'bloody cough', 'confusion', 'pleuritic chest pain', 'air bubble', 'depression', 'overdose', 'sputum production', 'snot', 'excessive mucous', 'tachypnea', 'fast breathing', 'dysarthria', 'dysgraphia', 'abrasion', 'alopecia', 'hair loss', 'dystonia', 'flaccid muscles', 'flaccidity', 'euphoria', 'blister', 'anasarca', 'hallucination', 'edema', 'headache', 'hirsutism', 'hair growth', 'hemiballismus', 'ballismus', 'laceration', 'paresthesia', 'homocidal ideation', 'insomnia', 'rash', 'urticaria', 'pimples', 'bumps', 'red dots', 'mania', 'paralysis', 'abnormal vaginal bleeding', 'excessive vaginal bleeding', 'bloody show', 'painful intercourse', 'pelvic pain', 'infertility', 'labour pains', 'vaginal bleeding in pregnancy', 'vaginal discharge', 'vaginismus', 'paranoia', 'phobia', 'prosopagnosia', 'sciatica', 'somnolence', 'sleepiness', 'suicidal ideation', 'tic', 'toothache', 'light headed', 'nauseated', 'sick', 'short of breath', 'sweaty', 'sleepy', 'tired', 'thirsty', 'weak'];
+    // Create option list of all the drugs
+    for (var i = 0; i < drugArray.length; i++) {
+
+        $(".new-symptom-input").append("<option>" + symptomSelectionArray[i] + "</option>");
+
+    }
+
+    $(".new-symptom-input").chosen({
+        // Set the drop down bar width
+        width: "40%"
+    });
+    
+    //for embedding google maps with nearby pharmacies
+    function getGeoTags(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position){
+                $('iframe').attr('src',
+                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d'+ position.coords.latitude +'!2d'+ position.coords.longitude +'!3d41.90519472495046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490797055209'
+                    );
+            });
+        } else { 
+            $('iframe').attr('src',
+                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11877.71094677172!2d-87.62855171696631!3d41.905162785034655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490798248002'
+                    );
+        }
+    }
 
 });
