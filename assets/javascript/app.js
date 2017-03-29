@@ -69,7 +69,7 @@ $(document).ready(function() {
         hello(auth.network).api('me').then(function(r) {
             
             // Inject it into the container
-            var label = $('#profile' + auth.network);
+            var label = document.getElementById("profile");
             if (!label) {
                 label = document.createElement('div');
                 label.id = 'profile_' + auth.network;
