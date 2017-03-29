@@ -161,8 +161,8 @@ body {
 #clickLeft {
   content: "";
   position: absolute;
-  color: #ccc;
-  background-color: #000;
+  color: #000;
+  background-color: #E96359;
   right: 0;
   top: 0;
   height: 600px;
@@ -211,8 +211,8 @@ body {
 #clickRight {
   content: "";
   position: absolute;
-  color: #ccc;
-  background-color: #000;
+  color: #000;
+  background-color: #3B97D3;
   left: 0;
   top: 0;
   height: 600px;
@@ -224,7 +224,10 @@ body {
   padding: 0;
   list-style-type: none;
 }
-
+#symptomLogo, #drugLogo{
+  margin-left: 10px;
+  margin-top: 20px;
+}
 .push {
     height: 75px;
 }
