@@ -359,17 +359,18 @@ $(document).ready(function() {
 
     $("#add-symptom-button").on("click", function runSymptom(event) {
         event.preventDefault();
-        
 
 
-        var userSymptomInput = $("#new-symptom-input").val().trim();
+
+        var userSymptomInput = $(".new-symptom-input").val();
         var userDateInput = $("#new-symptom-date").val();
         var userIntensityInput = $("#intensity option:selected").text();
 
-        
 
-        if (userSymptomInput.length > 0 && userDateInput && userIntensityInput.length === 1) {
-            
+        console.log(userSymptomInput + userDateInput + userIntensityInput);
+
+        if (userSymptomInput && userDateInput && userIntensityInput) {
+
             if (userSavedSymptomObject[userSymptomInput] === undefined) {
                 userSavedSymptomObject[userSymptomInput] = [];
             }
@@ -379,7 +380,7 @@ $(document).ready(function() {
                 intensity: $("#intensity option:selected").text()
             });
 
-            
+
 
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
         }
@@ -387,6 +388,9 @@ $(document).ready(function() {
 
 
     });
+
+
+
 
 
 
@@ -455,6 +459,24 @@ $(document).ready(function() {
     });
 
 
+
+
+
+
+
+
+    var symptomSelectionArray = [' ', 'cachexia', 'loss of appetite', 'weight loss', 'weight gain', 'dry mouth', 'fatigue', 'malaise', 'asthenia', 'muscle weakness', 'pyrexia', 'jaundice', 'pain', 'abdominal pain', 'back pain', 'arm pain', 'leg pain', 'chest pain', 'neck pain', 'finger pain', 'foot pain', 'mouth pain', 'knee pain', 'hip pain', 'joint pain', 'bruising', 'epistaxis', 'tremor', 'convulsions', 'muscle cramps', 'amaurosis fugax', 'blurred vision', 'Dalrymples sign', 'double vision', 'exophthalmos', 'mydriasis', 'miosis', 'nystagmus', 'eye pain', 'red eye', 'blindness', 'loss of vision', 'anorexia', 'bloating', 'belching', 'blood in stool', 'melena', 'hematochezia', 'constipation', 'diarrhea', 'loose stool', 'dysphagia', 'dyspepsia', 'flatulence', 'gas', 'fecal incontinence', 'haematemesis', 'blood in vomit', 'nausea', 'odynophagia', 'sore throat', 'tinnitus', 'ear pain', 'dizziness', 'vertigo', 'proctalgia fugax', 'rectal pain', 'anal itching', 'syncope', 'pyrosis', 'fainting', 'passing out', 'hypothermia', 'rectal malodor', 'foul smelling stool', 'hypothermia', 'hyperthermia', 'steatorrhea', 'discharge', 'vomiting', 'rectal discharge', 'penile discharge', 'mucous', 'bleeding', 'rectal bleeding', 'swelling', 'swelling', 'deformity', 'claudication', 'sweats', 'night sweats', 'palpitation', 'heart flutter', 'chills', 'shivering', 'tachycardia', 'fast heartrate', 'bradycardia', 'slow heartrate', 'arrhythmia', 'irregular heartbeat', 'irregular heartrate', 'acalculia', 'acrophobia', 'agnosia', 'dysuria', 'difficulty urinating', 'hematuria', 'blood in urine', 'agoraphobia', 'impotence', 'akathisia', 'polyuria', 'alexia', 'urinary frequency', 'retrograde ejaculation', 'anhedonia', 'urinary incontinence', 'urine retention', 'anxiety', 'hypoventilation', 'apraxia', 'hypoventilation', 'hyperventilation', 'arachnophobia', 'ataxia', 'bradypnea', 'bradykinesia', 'slow movment', 'slow breathing', 'difficulty breathing', 'apnea', 'stopped breathing', 'cough', 'cataplexy', 'fear', 'chorea', 'dyspnea', 'irregular breathing', 'claustrophobia', 'hemoptysis', 'bloody cough', 'confusion', 'pleuritic chest pain', 'air bubble', 'depression', 'overdose', 'sputum production', 'snot', 'excessive mucous', 'tachypnea', 'fast breathing', 'dysarthria', 'dysgraphia', 'abrasion', 'alopecia', 'hair loss', 'dystonia', 'flaccid muscles', 'flaccidity', 'euphoria', 'blister', 'anasarca', 'hallucination', 'edema', 'headache', 'hirsutism', 'hair growth', 'hemiballismus', 'ballismus', 'laceration', 'paresthesia', 'homocidal ideation', 'insomnia', 'rash', 'urticaria', 'pimples', 'bumps', 'red dots', 'mania', 'paralysis', 'abnormal vaginal bleeding', 'excessive vaginal bleeding', 'bloody show', 'painful intercourse', 'pelvic pain', 'infertility', 'labour pains', 'vaginal bleeding in pregnancy', 'vaginal discharge', 'vaginismus', 'paranoia', 'phobia', 'prosopagnosia', 'sciatica', 'somnolence', 'sleepiness', 'suicidal ideation', 'tic', 'toothache', 'light headed', 'nauseated', 'sick', 'short of breath', 'sweaty', 'sleepy', 'tired', 'thirsty', 'weak'];
+    // Create option list of all the drugs
+    for (var i = 0; i < drugArray.length; i++) {
+
+        $(".new-symptom-input").append("<option>" + symptomSelectionArray[i] + "</option>");
+
+    }
+
+    $(".new-symptom-input").chosen({
+        // Set the drop down bar width
+        width: "40%"
+    });
 
 
 });
