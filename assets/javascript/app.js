@@ -23,7 +23,8 @@ $(document).ready(function() {
     var isDrugPanelOpen = false;
     var isSympPanelOpen = false;
 
-
+    getGeoTags();
+    
     if (localStorage.getItem('userLogon')) {
         console.log('Current User Detected');
         currentUserID = localStorage.getItem('userLogon');
@@ -549,6 +550,20 @@ $(document).ready(function() {
         // Set the drop down bar width
         width: "40%"
     });
-
+    
+    //for embedding google maps with nearby pharmacies
+    function getGeoTags(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position){
+                $('iframe').attr('src',
+                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d'+ position.coords.latitude +'!2d'+ position.coords.longitude +'!3d41.90519472495046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490797055209'
+                    );
+            });
+        } else { 
+            $('iframe').attr('src',
+                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11877.71094677172!2d-87.62855171696631!3d41.905162785034655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490798248002'
+                    );
+        }
+    }
 
 });
