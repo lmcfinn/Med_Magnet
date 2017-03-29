@@ -6,3 +6,5 @@ Allow users to quickly research known drugs side-effects, and compare those side
 **Trello Page:** https://trello.com/b/czziz46D/med-magnet	
   		  
 **Project Requirements:** [Requirements.md](Requirements.md)
+
+**Deployed Live Page:** https://dangnabit.github.io/Med_Magnet/index.html
