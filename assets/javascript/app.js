@@ -343,6 +343,25 @@ $(document).ready(function() {
     }
 
 
+    function makePieChart(){
+        var columnData= [];
+
+        for(var symptomKey in userSavedSymptomObject){
+            var currentSymptomArray = [symptomKey];
+            currentSymptomArray.push( userSavedSymptomObject[symptomKey].length );
+
+            columnData.push(currentSymptomArray);
+        }
+      console.log(columnData);
+
+        var chart = c3.generate({
+            bindto: '#pieChart',
+            data: {
+                columns: columnData,
+                type : 'pie',
+            }
+        });
+    }//end of makeGaugeData()
 
 
 
@@ -412,7 +431,7 @@ $(document).ready(function() {
         }
         // create new row for new symptom
 
-
+        makePieChart();
     });
 
 
@@ -426,7 +445,7 @@ $(document).ready(function() {
         var tableIndex = this.dataset.indexNumber;
         var tableSymptom = this.dataset.symptom;
         removeTR(tableSymptom, tableIndex);
-
+        makePieChart();
     });
 
 
@@ -452,7 +471,7 @@ $(document).ready(function() {
         console.log("HELP");
     }
 
-
+    //Drug Panel Fade in - Fade Out
     $('#clickLeft').on('click', function() {
 
         if (!isDrugPanelOpen) {
@@ -479,11 +498,12 @@ $(document).ready(function() {
         }
     });
 
+    //Symptom Panel Fade in - Fade Out
     $('#clickRight').on('click', function() {
 
         if (!isSympPanelOpen) {
             setTimeout(function() {
-                $('#symptomCanvas').fadeIn('slow', function() {});
+                $('#symptomCanvas').fadeIn('slow', function() {makePieChart();});
             }, 1500)
         } else {
             $('#symptomCanvas').fadeOut('fast', function() {});
@@ -507,8 +527,6 @@ $(document).ready(function() {
             $('#symptomPanel').addClass('open');
             isSympPanelOpen = true;
         }
-
-
     });
 
 
