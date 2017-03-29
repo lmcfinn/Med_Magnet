@@ -16,6 +16,9 @@ h1 {
   line-height: 1.1;
 }
 
+.containerIntro {
+  width: 100%;
+}
 
 /*--Nav Bar--*/
 
@@ -129,6 +132,10 @@ body {
   width: 50px;
 }
 
+#profile {
+  padding: 0;
+}
+
 #drugCanvas {
     display:none;
  
@@ -196,7 +203,7 @@ body {
   height: 600px;
   padding-left: 0;
   background: #f2f2f2;
-  right: 30px;
+  right: 31px;
 }
 
 #symptomPanel.open {
