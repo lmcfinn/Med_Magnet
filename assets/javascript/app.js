@@ -83,7 +83,9 @@ $(document).ready(function() {
 
 
     var signin = function() {
-        hello('google').login();
+        hello('google').login(function(){
+            window.location.reload();
+        });
 
     };
 
