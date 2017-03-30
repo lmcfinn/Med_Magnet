@@ -181,7 +181,7 @@ $(document).ready(function() {
 
 
     // Add the drugs to drugList
-    $(".addbutton").on("click", function() {
+    $(".addbutton").on("click", function(event) {
         event.preventDefault();
         var $drugSelect = $('.drugselect').val();
         var index = drugSelected.indexOf($drugSelect);
