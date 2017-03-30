@@ -391,7 +391,7 @@ $(document).ready(function() {
                 // symptom is tagged with item-symptom name
                 symptomContainer.attr("id", "item-" + symptom);
 
-                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + " value='x'></td>";
+                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td class='color"+symptomList[symptom][i].intensity+"'>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + " value='x'></td>";
 
                 symptomContainer.append(symptomListTr);
 

@@ -256,3 +256,19 @@ body {
     margin: 0;
     z-index: 1000;
 }
+
+.color1{
+  background-color: #ffe6e6;
+}
+.color2{
+  background-color: #ff9999;
+}
+.color3{
+  background-color: #ff8080;
+}
+.color4{
+  background-color: #ff4d4d;
+}
+.color5{
+  background-color: #ff0000;
+}
