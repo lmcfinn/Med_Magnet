@@ -83,8 +83,10 @@ $(document).ready(function() {
 
 
     var signin = function() {
-        hello('google').login().then(function(){
-            window.location.reload();
+        hello('google').login(function(){
+            setTimeout(function(){ 
+                window.location.reload(); 
+            }, 1500);
         });
 
     };
