@@ -83,7 +83,10 @@ $(document).ready(function() {
 
 
     var signin = function() {
-        hello('google').login();
+        hello('google').login(function(){
+            console.log('window.reload');
+            window.location.reload();
+        });
 
     };
 
@@ -113,8 +116,7 @@ $(document).ready(function() {
             localStorage.setItem('userLogon', currentUserID);
             getuser(currentUserID);
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-            console.log('inner');
-            window.location.reload();
+
         });
     });
 
