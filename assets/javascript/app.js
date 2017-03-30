@@ -132,7 +132,6 @@ $(document).ready(function() {
     }
     $('#signIn').on('click', function() {
         signin();
-        window.location.reload();
     })
 
     $('#signOut').on('click', function() {
