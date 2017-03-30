@@ -85,7 +85,7 @@ $(document).ready(function() {
     var signin = function() {
         hello('google').login(function(){
             console.log('window.reload');
-            window.location.reload();
+            setTimeout(function(){ window.location.reload() }, 1500);
         });
 
     };
