@@ -7,4 +7,4 @@ Allow users to quickly research known drugs side-effects, and compare those side
   		  
 **Project Requirements:** [Requirements.md](Requirements.md)
 
-**Deployed Live Page:** https://dangnabit.github.io/Med_Magnet/index.html
+**Deployed Live Page:** https://lmcfinn.github.io/Med_Magnet/
