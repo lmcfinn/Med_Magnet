@@ -113,7 +113,7 @@ $(document).ready(function() {
             localStorage.setItem('userLogon', currentUserID);
             getuser(currentUserID);
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-            window.location.reload(true);
+           
         });
     });
 
