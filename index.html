@@ -34,12 +34,13 @@
         <div class="col-sm-9">
           <img src="assets/images/medmagnet.png" alt="MedMagnet Logo">
         </div>
-        <div id="username" class="col-sm-2 text-right"></div>
+        <div id="username" class="col-sm-2 text-right">
+          <button class="btn btn-danger hidden" id="signOut">Google Logout</button>
+        </div>
         <div id="profile" class="col-sm-1 pull-right">
           <button class="btn btn-primary" id="signIn">
             <img id="profileImg" src="assets/images/head.png" alt="Google Sign On" title="Google Sign On">
           </button>
-          <button class="btn btn-danger hidden" id="signOut">Google Logout</button>
         </div>
       </div>
     </div>
@@ -137,12 +138,13 @@
           <div class="col-sm-8 pull-right">
             <div class="panel panel-default">
               <!-- container for inputing symptom date, time, severity, duration, comments -->
-              <label for="panel-heading">Add Symptom</label>
-              <form action="/action_page.php">
+              <div class="panel-heading">Add Symptom</div>
+              <form class="sympForm">
                 <select class="new-symptom-input" data-placeholder="add your symptom">
                 </select>
                 <input id="new-symptom-date" type="date" value="" placeholder="">
-                <select id="intensity" data-placeholder="select intensity">
+                <select id="intensity" placeholder="select intensity">
+                  <option value="" disabled selected>Select intensity</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -169,7 +171,6 @@
       </div>
     </div>
   </div>
-  
 </body>
 
 </html>

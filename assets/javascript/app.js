@@ -3,7 +3,7 @@ $(document).ready(function() {
     var currentUser = {};
     var userSavedSymptomObject = {};
     var drugSelected = [];
-    var currentUserID;
+    var currentUserID = '0120';
     var currentUserImg;
     var currentUserName = "Sign in to load your data!"
         // firebas congfig and cached functions
@@ -336,6 +336,10 @@ $(document).ready(function() {
 
                 }
 
+            }
+
+            if(conflictingDrugs.length > 10){
+                conflictingDrugs = conflictingDrugs.splice(0,10);
             }
 
             if (callback) {

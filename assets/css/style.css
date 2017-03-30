@@ -126,6 +126,11 @@ body {
   margin-top: 10px;
 }
 
+.sympForm {
+  margin-left: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+} 
 
 #profileImg {
   height: 50px;
@@ -138,7 +143,11 @@ body {
 
 #drugCanvas {
     display:none;
- 
+    margin-top: 25px;
+}
+
+#intensity {
+  width: 150px;
 }
 
 #about{
