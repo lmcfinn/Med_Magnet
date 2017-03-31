@@ -76,7 +76,7 @@ $(document).ready(function() {
         localStorage.removeItem('hello');
         localStorage.removeItem('userLogon');
         delete_cookie('NID');
-        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.io/Med_Magnet/index.html";
+        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://lmcfinn.github.io/Med_Magnet/index.html";
     };
 
 
