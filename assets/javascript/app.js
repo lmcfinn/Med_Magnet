@@ -3,7 +3,7 @@ $(document).ready(function() {
     var currentUser = {};
     var userSavedSymptomObject = {};
     var drugSelected = [];
-    var currentUserID;
+    var currentUserID = '107580231397808901546';
     var currentUserImg;
     var currentUserName = "Sign in to load your data!"
         // firebas congfig and cached functions
@@ -23,8 +23,10 @@ $(document).ready(function() {
     var isDrugPanelOpen = false;
     var isSympPanelOpen = false;
 
+    var googleMapsKey = 'AIzaSyAUYsyg6BMEAfnFRIk2rjrtjQGJ_hQhgO8';
+
     getGeoTags();
-    
+
     if (localStorage.getItem('userLogon')) {
         console.log('Current User Detected');
         currentUserID = localStorage.getItem('userLogon');
@@ -74,14 +76,18 @@ $(document).ready(function() {
         localStorage.removeItem('hello');
         localStorage.removeItem('userLogon');
         delete_cookie('NID');
-        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://dangnabit.github.io/Med_Magnet/index.html";
+        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://lmcfinn.github.io/Med_Magnet/index.html";
     };
 
 
 
 
     var signin = function() {
-        hello('google').login();
+        hello('google').login(function(){
+            setTimeout(function(){ 
+                window.location.reload(); 
+            }, 1500);
+        });
 
     };
 
@@ -89,7 +95,7 @@ $(document).ready(function() {
     hello.init({
         google: "901877515687-0d07o7leoihhv3ina4bqcv40ab347q86.apps.googleusercontent.com"
     }, {
-        redirect_uri: 'https://dangnabit.github.io/Med_Magnet/index.html'
+        redirect_uri: 'https://lmcfinn.github.io/Med_Magnet/index.html'
     });
 
     hello.on('auth.login', function(auth) {
@@ -111,21 +117,22 @@ $(document).ready(function() {
             localStorage.setItem('userLogon', currentUserID);
             getuser(currentUserID);
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-
         });
     });
 
     // writes user data to firebase
     var writeUserData = function(userId, name, imageUrl, drugs, symptoms) {
-        firebase.database().ref('users/' + userId).update({
-            username: name,
-            profile_picture: imageUrl,
-            drugList: JSON.stringify(drugs),
-            symptomsList: JSON.stringify(symptoms)
-        });
-        localStorage.setItem('userLogon', userId);
-    }
+        if (userId !== 'Default') {
 
+            firebase.database().ref('users/' + userId).update({
+                username: name,
+                profile_picture: imageUrl,
+                drugList: JSON.stringify(drugs),
+                symptomsList: JSON.stringify(symptoms)
+            });
+            localStorage.setItem('userLogon', userId);
+        }
+    }
     $('#signIn').on('click', function() {
         signin();
     })
@@ -158,7 +165,7 @@ $(document).ready(function() {
 
 
     // Create an array of all the drugs
-    var drugArray = [' ', 'Abilify', 'Accupril', 'Aciphex', 'Actonel', 'Actos', 'Adderall', 'Advair', 'Advil', 'Aldactone', 'Aleve', 'Altace', 'Amaryl', 'Ambien', 'Amoxil', 'AndroGel', 'Apresoline', 'Aricept', 'Ativan', 'Augmentin', 'Avapro', 'Avodart', 'Bactroban', 'Bentyl', 'Biaxin', 'Brilinta', 'Buspar', 'Bystolic', 'Caltrate', 'Cardizem', 'Cardura', 'Catapres', 'Ceftin', 'Celebrex', 'Celexa', 'Cialis', 'Cipro', 'Claritin', 'Cleocin', 'Clovate', 'Cogentin', 'Concerta', 'Coreg', 'Coumadin', 'Cozaar', 'Crestor', 'Cymbalta', 'Deltasone', 'Depakote', 'Desyrel', 'Detrol', 'Dexilant', 'Diabeta', 'Diflucan', 'Dilantin', 'Diovan', 'Ditropan', 'Dolophine', 'Dramamine', 'Duragesic', 'Dyazide', 'Effexor', 'Elavil', 'Enbrel', 'Estrace', 'Evista', 'Exelon', 'Flagyl', 'Flexeril', 'Flomax', 'Flonase', 'Focalin', 'Folvite', 'Fosamax', 'Gablofen', 'Glucophage', 'Glucotrol', 'HCTZ', 'Humalog', 'Humira', 'Hytrin', 'Hyzaar', 'Imitrex', 'Inderal', 'Januvia', 'K-Tab', 'Keflex', 'Kenalog', 'Keppra', 'Klonopin', 'Lamictal', 'Lanoxin', 'Lantus', 'Lasix', 'Latuda', 'Levaquin', 'Levemir', 'Levitra', 'Lexapro', 'Lipitor', 'Lopid', 'Lopressor', 'Lotensin', 'Lovenox', 'Lunesta', 'Lyrica', 'Macrobid', 'Medrol', 'Mevacor', 'Minocin', 'Mobic', 'Mycostatin', 'Namenda', 'Nasonex', 'Neurontin', 'Nexium', 'NitroStat SL', 'Nizoral', 'Norvasc', 'Novolog', 'Omnicef', 'Omnipred', 'Onglyza', 'OxyContin', 'Pamelor', 'Patanol', 'Paxil', 'Pen VK', 'Pepcid', 'Percocet', 'Phenergan', 'Plavix', 'Pradaxa', 'Pravachol', 'Premarin', 'Prevacid', 'Prilosec', 'Prinivil', 'Prinizide', 'Pristiq', 'ProAir HFA', 'Procardia', 'Proscar', 'Protonix', 'Prozac', 'Pyridium', 'Reglan', 'Relafen', 'Remeron', 'Requip', 'Restoril', 'Rheumatrex', 'Risperdal', 'Robaxin', 'Robitussin', 'Seroquel', 'Singulair', 'Soma', 'Spiriva', 'Strattera', 'Suboxone', 'Symbicort', 'Synthroid', 'Tamiflu', 'Tenormin', 'Tessalon', 'Topamax', 'Travatan', 'Tricor', 'Tylenol #2', 'Uceris', 'Uloric', 'Ultram', 'Valium', 'Valtrex', 'Vasotec', 'Verelan', 'VESIcare', 'Viagra', 'Vicodin', 'Victoza', 'Voltaren', 'Vytorin', 'Vyvanse', 'Wellbutrin', 'Xalatan', 'Xanax', 'Xarelto', 'Xopenex', 'Zanaflex', 'Zantac', 'Zetia', 'Zithromax', 'Zocor', 'Zofran', 'Zoloft', 'Zovirax', 'Zyloprim', 'Zyprexa', 'Zyrtec'];
+    var drugArray = [' ', 'Abilify', 'Accupril', 'Aciphex', 'Actonel', 'Actos', 'Adderall', 'Advil', 'Aldactone', 'Aleve', 'Altace', 'Amaryl', 'AndroGel', 'Aricept', 'Ativan', 'Augmentin', 'Avapro', 'Avodart', 'Bactroban', 'Bentyl', 'Biaxin', 'Brilinta', 'Bystolic', 'Cardura', 'Catapres', 'Ceftin', 'Celebrex', 'Celexa', 'Cialis', 'Cipro', 'Claritin', 'Cleocin', 'Cogentin', 'Concerta', 'Coreg', 'Coumadin', 'Cozaar', 'Crestor', 'Cymbalta', 'Deltasone', 'Depakote', 'Detrol', 'Dexilant', 'Diabeta', 'Diflucan', 'Dilantin', 'Diovan', 'Dolophine', 'Duragesic', 'Dyazide', 'Elavil', 'Enbrel', 'Estrace', 'Evista', 'Exelon', 'Flagyl', 'Flomax', 'Focalin', 'Fosamax', 'Gablofen', 'Glucophage', 'Glucotrol', 'Humalog', 'Humira', 'Hyzaar', 'Imitrex', 'Januvia', 'K-Tab', 'Keflex', 'Kenalog', 'Keppra', 'Klonopin', 'Lamictal', 'Lanoxin', 'Lantus', 'Lasix', 'Latuda', 'Levaquin', 'Levemir', 'Levitra', 'Lexapro', 'Lipitor', 'Lopid', 'Lopressor', 'Lotensin', 'Lovenox', 'Lunesta', 'Lyrica', 'Macrobid', 'Medrol', 'Mevacor', 'Minocin', 'Mobic', 'Namenda', 'Nasonex', 'Neurontin', 'Nexium', 'Nizoral', 'Norvasc', 'Novolog', 'Omnipred', 'Onglyza', 'OxyContin', 'Pamelor', 'Patanol', 'Paxil', 'Pepcid', 'Percocet', 'Phenergan', 'Plavix', 'Pradaxa', 'Pravachol', 'Premarin', 'Prevacid', 'Prilosec', 'Prinivil', 'ProAir HFA', 'Procardia', 'Proscar', 'Prozac', 'Pyridium', 'Reglan', 'Remeron', 'Requip', 'Restoril', 'Rheumatrex', 'Risperdal', 'Robaxin', 'Seroquel', 'Singulair', 'Soma', 'Spiriva', 'Suboxone', 'Symbicort', 'Synthroid', 'Tamiflu', 'Tenormin', 'Tessalon', 'Topamax', 'Tricor', 'Uceris', 'Uloric', 'Ultram', 'Valium', 'Valtrex', 'Vasotec', 'Verelan', 'VESIcare', 'Viagra', 'Vicodin', 'Victoza', 'Voltaren', 'Vytorin', 'Vyvanse', 'Xalatan', 'Xanax', 'Xarelto', 'Xopenex', 'Zanaflex', 'Zantac', 'Zetia', 'Zithromax', 'Zocor', 'Zofran', 'Zoloft', 'Zovirax', 'Zyloprim', 'Zyprexa'];
     // Create option list of all the drugs
     for (var i = 0; i < drugArray.length; i++) {
 
@@ -177,16 +184,14 @@ $(document).ready(function() {
 
 
     // Add the drugs to drugList
-    $(".addbutton").on("click", function() {
-
+    $(".addbutton").on("click", function(event) {
         event.preventDefault();
-
-
-        drugSelected.push($(".drugselect").val());
-
-        // console.log("array: " + drugSelected)
-
-        setDrugtoProfile(drugSelected);
+        var $drugSelect = $('.drugselect').val();
+        var index = drugSelected.indexOf($drugSelect);
+        if (index < 0){
+            drugSelected.push($drugSelect);
+            setDrugtoProfile(drugSelected);
+        }
     });
 
     // Retrieve druglist from Firebase to display in the table
@@ -334,6 +339,10 @@ $(document).ready(function() {
 
             }
 
+            if(conflictingDrugs.length > 10){
+                conflictingDrugs = conflictingDrugs.splice(0,10);
+            }
+
             if (callback) {
                 callback(conflictingDrugs);
             } else {
@@ -344,25 +353,25 @@ $(document).ready(function() {
     }
 
 
-    function makePieChart(){
-        var columnData= [];
+    function makePieChart() {
+        var columnData = [];
 
-        for(var symptomKey in userSavedSymptomObject){
+        for (var symptomKey in userSavedSymptomObject) {
             var currentSymptomArray = [symptomKey];
-            currentSymptomArray.push( userSavedSymptomObject[symptomKey].length );
+            currentSymptomArray.push(userSavedSymptomObject[symptomKey].length);
 
             columnData.push(currentSymptomArray);
         }
-      console.log(columnData);
+        console.log(columnData);
 
         var chart = c3.generate({
             bindto: '#pieChart',
             data: {
                 columns: columnData,
-                type : 'pie',
+                type: 'pie',
             }
         });
-    }//end of makeGaugeData()
+    } //end of makePieChart()
 
 
 
@@ -382,7 +391,7 @@ $(document).ready(function() {
                 // symptom is tagged with item-symptom name
                 symptomContainer.attr("id", "item-" + symptom);
 
-                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + " value='x'></td>";
+                var symptomListTr = "<td>" + symptom + "</td><td>" + symptomList[symptom][i].date + "</td><td class='color"+symptomList[symptom][i].intensity+"'>" + symptomList[symptom][i].intensity + "</td><td><input type='button' id='checkbox' data-symptom=" + symptom.replace(/\s/g, '-') + " data-index-number= " + i + " value='x'></td>";
 
                 symptomContainer.append(symptomListTr);
 
@@ -427,7 +436,7 @@ $(document).ready(function() {
             });
 
 
-
+            $('.new-symptom-input').val('');
             writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
         }
         // create new row for new symptom
@@ -469,7 +478,7 @@ $(document).ready(function() {
 
         console.log(userSavedSymptomObject);
         writeUserData(currentUserID, currentUserName, currentUserImg, drugSelected, userSavedSymptomObject);
-        console.log("HELP");
+        
     }
 
     //Drug Panel Fade in - Fade Out
@@ -504,7 +513,7 @@ $(document).ready(function() {
 
         if (!isSympPanelOpen) {
             setTimeout(function() {
-                $('#symptomCanvas').fadeIn('slow', function() {makePieChart();});
+                $('#symptomCanvas').fadeIn('slow', function() { makePieChart(); });
             }, 1500)
         } else {
             $('#symptomCanvas').fadeOut('fast', function() {});
@@ -538,7 +547,7 @@ $(document).ready(function() {
 
 
 
-    var symptomSelectionArray = [' ', 'cachexia', 'loss of appetite', 'weight loss', 'weight gain', 'dry mouth', 'fatigue', 'malaise', 'asthenia', 'muscle weakness', 'pyrexia', 'jaundice', 'pain', 'abdominal pain', 'back pain', 'arm pain', 'leg pain', 'chest pain', 'neck pain', 'finger pain', 'foot pain', 'mouth pain', 'knee pain', 'hip pain', 'joint pain', 'bruising', 'epistaxis', 'tremor', 'convulsions', 'muscle cramps', 'amaurosis fugax', 'blurred vision', 'Dalrymples sign', 'double vision', 'exophthalmos', 'mydriasis', 'miosis', 'nystagmus', 'eye pain', 'red eye', 'blindness', 'loss of vision', 'anorexia', 'bloating', 'belching', 'blood in stool', 'melena', 'hematochezia', 'constipation', 'diarrhea', 'loose stool', 'dysphagia', 'dyspepsia', 'flatulence', 'gas', 'fecal incontinence', 'haematemesis', 'blood in vomit', 'nausea', 'odynophagia', 'sore throat', 'tinnitus', 'ear pain', 'dizziness', 'vertigo', 'proctalgia fugax', 'rectal pain', 'anal itching', 'syncope', 'pyrosis', 'fainting', 'passing out', 'hypothermia', 'rectal malodor', 'foul smelling stool', 'hypothermia', 'hyperthermia', 'steatorrhea', 'discharge', 'vomiting', 'rectal discharge', 'penile discharge', 'mucous', 'bleeding', 'rectal bleeding', 'swelling', 'swelling', 'deformity', 'claudication', 'sweats', 'night sweats', 'palpitation', 'heart flutter', 'chills', 'shivering', 'tachycardia', 'fast heartrate', 'bradycardia', 'slow heartrate', 'arrhythmia', 'irregular heartbeat', 'irregular heartrate', 'acalculia', 'acrophobia', 'agnosia', 'dysuria', 'difficulty urinating', 'hematuria', 'blood in urine', 'agoraphobia', 'impotence', 'akathisia', 'polyuria', 'alexia', 'urinary frequency', 'retrograde ejaculation', 'anhedonia', 'urinary incontinence', 'urine retention', 'anxiety', 'hypoventilation', 'apraxia', 'hypoventilation', 'hyperventilation', 'arachnophobia', 'ataxia', 'bradypnea', 'bradykinesia', 'slow movment', 'slow breathing', 'difficulty breathing', 'apnea', 'stopped breathing', 'cough', 'cataplexy', 'fear', 'chorea', 'dyspnea', 'irregular breathing', 'claustrophobia', 'hemoptysis', 'bloody cough', 'confusion', 'pleuritic chest pain', 'air bubble', 'depression', 'overdose', 'sputum production', 'snot', 'excessive mucous', 'tachypnea', 'fast breathing', 'dysarthria', 'dysgraphia', 'abrasion', 'alopecia', 'hair loss', 'dystonia', 'flaccid muscles', 'flaccidity', 'euphoria', 'blister', 'anasarca', 'hallucination', 'edema', 'headache', 'hirsutism', 'hair growth', 'hemiballismus', 'ballismus', 'laceration', 'paresthesia', 'homocidal ideation', 'insomnia', 'rash', 'urticaria', 'pimples', 'bumps', 'red dots', 'mania', 'paralysis', 'abnormal vaginal bleeding', 'excessive vaginal bleeding', 'bloody show', 'painful intercourse', 'pelvic pain', 'infertility', 'labour pains', 'vaginal bleeding in pregnancy', 'vaginal discharge', 'vaginismus', 'paranoia', 'phobia', 'prosopagnosia', 'sciatica', 'somnolence', 'sleepiness', 'suicidal ideation', 'tic', 'toothache', 'light headed', 'nauseated', 'sick', 'short of breath', 'sweaty', 'sleepy', 'tired', 'thirsty', 'weak'];
+    var symptomSelectionArray = [' ','abdominal pain','abnormal vaginal bleeding','abrasion','acalculia','acrophobia','agnosia','agoraphobia','air bubble','akathisia','alexia','alopecia','amaurosis fugax','anal itching','anasarca','anhedonia','anorexia','anxiety','apnea','apraxia','arachnophobia','arm pain','arrhythmia','asthenia','ataxia','back pain','ballismus','belching','bleeding','blindness','blister','bloating','blood in stool','blood in urine','blood in vomit','bloody cough','bloody show','blurred vision','bradycardia','bradykinesia','bradypnea','bruising','bumps','cachexia','cataplexy','chest pain','chills','chorea','claudication','claustrophobia','confusion','constipation','convulsions','cough', 'Dalrymples sign', 'deformity','depression','diarrhea','difficulty breathing','difficulty urinating','discharge','dizziness','double vision','dry mouth','dysarthria','dysgraphia','dyspepsia','dysphagia','dyspnea','dystonia','dysuria','ear pain','edema','epistaxis','euphoria','excessive mucous','excessive vaginal bleeding','exophthalmos','eye pain','fainting','fast breathing','fast heartrate','fatigue','fear','fecal incontinence','finger pain','flaccid muscles','flaccidity','flatulence','foot pain','foul smelling stool','gas','haematemesis','hair growth','hair loss','hallucination','headache','heart flutter','hematochezia','hematuria','hemiballismus','hemoptysis','hip pain','hirsutism','homocidal ideation','hyperthermia','hyperventilation','hypothermia','hypothermia','hypoventilation','hypoventilation','impotence','infertility','insomnia','irregular breathing','irregular heartbeat','irregular heartrate','jaundice','joint pain','knee pain','labour pains','laceration','leg pain','light headed','loose stool','loss of appetite','loss of vision','malaise','mania','melena','miosis','mouth pain','mucous','muscle cramps','muscle weakness','mydriasis','nausea','nauseated','neck pain','night sweats','nystagmus','odynophagia','overdose','pain','painful intercourse','palpitation','paralysis','paranoia','paresthesia','passing out','pelvic pain','penile discharge','phobia','pimples','pleuritic chest pain','polyuria','proctalgia fugax','prosopagnosia','pyrexia','pyrosis','rash','rectal bleeding','rectal discharge','rectal malodor','rectal pain','red dots','red eye','retrograde ejaculation','sciatica','shivering','short of breath','sick','sleepiness','sleepy','slow breathing','slow heartrate','slow movment','snot','somnolence','sore throat','sputum production','steatorrhea','stopped breathing','suicidal ideation','sweats','sweaty','swelling','swelling','syncope','tachycardia','tachypnea','thirsty','tic','tinnitus','tired','toothache','tremor','urinary frequency','urinary incontinence','urine retention','urticaria','vaginal bleeding in pregnancy','vaginal discharge','vaginismus','vertigo','vomiting','weak','weight gain','weight loss'];
     // Create option list of all the drugs
     for (var i = 0; i < drugArray.length; i++) {
 
@@ -550,19 +559,17 @@ $(document).ready(function() {
         // Set the drop down bar width
         width: "40%"
     });
-    
+
     //for embedding google maps with nearby pharmacies
-    function getGeoTags(){
+    function getGeoTags() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position){
-                $('iframe').attr('src',
-                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d'+ position.coords.latitude +'!2d'+ position.coords.longitude +'!3d41.90519472495046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490797055209'
-                    );
+            navigator.geolocation.getCurrentPosition(function(position) {
+                $('iframe').attr('src', 'https://www.google.com/maps/embed/v1/search?key=' + googleMapsKey +'&q=Pharmacy&center=' + position.coords.latitude + ',' + position.coords.longitude + "&zoom=15");
             });
-        } else { 
+        } else {
             $('iframe').attr('src',
-                    'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11877.71094677172!2d-87.62855171696631!3d41.905162785034655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490798248002'
-                    );
+                'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d11877.71094677172!2d-87.62855171696631!3d41.905162785034655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spharmacy!5e0!3m2!1sen!2sus!4v1490798248002'
+            );
         }
     }
 

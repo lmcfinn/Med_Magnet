@@ -126,6 +126,11 @@ body {
   margin-top: 10px;
 }
 
+.sympForm {
+  margin-left: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+} 
 
 #profileImg {
   height: 50px;
@@ -138,7 +143,11 @@ body {
 
 #drugCanvas {
     display:none;
- 
+    margin-top: 25px;
+}
+
+#intensity {
+  width: 150px;
 }
 
 #about{
@@ -149,20 +158,20 @@ body {
   width: 50%;  
   transfrom: translate3d(-100%, -55%, 0);
   -webkit-transform: translate3d(-100%, -55%, 0);
-  top: 500px;
+  top: 530px;
   position: absolute;
   transition: all 1s;
   -webkit-transition: all 1.5s;
-  height: 600px;
+  height: 800px;
   padding-right: 0;
   background: #f2f2f2;
   left: 50px;
 }
 
 #drugPanel.open {
-  transfrom: translate3d(0%, -55%, 0);
-  -webkit-transform: translate3d(0%, -55%, 0);
-    width: 70%;
+  transfrom: translate3d(-4.5%, -55%, 0);
+  -webkit-transform: translate3d(-4.5%, -55%, 0);
+    width: 80%;
     z-index: 100;
     background-color: #f2f2f2;
     box-shadow: 0px 0px 8px 0px rgba(82,82,82,0.39);
@@ -175,7 +184,7 @@ body {
   background-color: #E96359;
   right: 0;
   top: 0;
-  height: 600px;
+  height: 800px;
   width: 50px;
 }
 
@@ -196,20 +205,20 @@ body {
   
   transfrom: translate3d(5%, -55%, 0);
   -webkit-transform: translate3d(5%, -55%, 0);
-  top: 500px;
+  top: 530px;
   position: absolute;
   transition: all 1s;
-  -webkit-transition: all 2s;
-  height: 600px;
+  -webkit-transition: all 1.5s;
+  height: 800px;
   padding-left: 0;
   background: #f2f2f2;
   right: 31px;
 }
 
 #symptomPanel.open {
-  transfrom: translate3d(0%, -55%, 0);
-  -webkit-transform: translate3d(0%, -55%, 0);
-    width: 70%;
+  transfrom: translate3d(3%, -55%, 0);
+  -webkit-transform: translate3d(3%, -55%, 0);
+    width: 80%;
     z-index: 100;
     background-color: #f2f2f2;
     box-shadow: 0px 0px 8px 0px rgba(82,82,82,0.39);
@@ -224,7 +233,7 @@ body {
   background-color: #3B97D3;
   left: 0;
   top: 0;
-  height: 600px;
+  height: 800px;
   width: 50px;
 }
 
@@ -245,4 +254,21 @@ body {
     position: absolute;
     bottom: 0;
     margin: 0;
+    z-index: 1000;
+}
+
+.color1{
+  background-color: #ffe6e6;
+}
+.color2{
+  background-color: #ffb3b3;
+}
+.color3{
+  background-color: #ff8080;
+}
+.color4{
+  background-color: #ff4d4d;
+}
+.color5{
+  background-color: #ff0000;
 }
